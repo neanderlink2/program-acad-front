@@ -1,16 +1,17 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { FirebaseWrapper } from '../../components/firebase-wrapper';
-import { RootState } from '../../configs/store';
-import { increment, decrement } from '../../modules/counter/actions';
+import React, { Fragment } from 'react';
+import { withAuth } from '../../components/firebase-wrapper';
+import { WrappedComponentProps } from 'react-with-firebase-auth';
+import { Typography, Container } from '@material-ui/core';
 
 
-const HomeScreen = () => {
+const HomeScreen = ({ user, signInWithGoogle }: WrappedComponentProps) => {
     return (
-        <div>
-            <FirebaseWrapper></FirebaseWrapper>
-        </div>
+        <Container>
+            { /* user ? user.displayName : null}
+            <button onClick={() => signInWithGoogle()}>Google</button>*/ }
+            <Typography>Tela inicial</Typography>
+        </Container>
     );
 }
 
-export default HomeScreen;
+export default withAuth(HomeScreen);
