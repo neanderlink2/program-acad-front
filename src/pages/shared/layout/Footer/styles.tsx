@@ -1,7 +1,6 @@
 import React from 'react';
 import { Typography, Container } from '@material-ui/core';
 import { styled, makeStyles } from '@material-ui/core/styles';
-import styledComponent from 'styled-components';
 
 export const SpacedBox = styled(Container)({
     display: 'flex',
@@ -21,7 +20,7 @@ const useStyles = makeStyles({
 
 export const Logo = (props: React.PropsWithChildren<React.ImgHTMLAttributes<{}>>) => {
     const classes = useStyles();
-    return <img {...props} className={[props.className, classes.image].join(' ')} />
+    return <img alt="" {...props} className={[props.className, classes.image].join(' ')} />
 }
 
 export const Credits = styled(Typography)({
