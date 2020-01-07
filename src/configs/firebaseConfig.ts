@@ -19,3 +19,11 @@ export const providers = {
     githubProvider: new firebase.auth.GithubAuthProvider(),
     facebookProvider: new firebase.auth.FacebookAuthProvider()
 };
+
+export const firebaseErrorCodes = {
+    NOT_FOUND: "auth/user-not-found",
+    WRONG_PASSWORD: "auth/wrong-password",
+    INVALID_EMAIL: "auth/invalid-email",
+    ACCOUNT_EXISTING: "auth/account-exists-with-different-credential",
+    POPUP_CLOSED: "auth/popup-closed-by-user"
+};

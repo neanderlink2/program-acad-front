@@ -1,9 +1,12 @@
 import React from 'react';
 import { GitHub as GitHubIcon } from '@material-ui/icons';
 import { BlackButton } from '../styles';
+import { ButtonProps } from '@material-ui/core'
 
-export const GitHubButton = ({ variant = "contained", ...props }: { variant?: "contained" | "outlined" | "text" }) => {
+const Button = ({ onClick, variant = "contained" }: ButtonProps) => {
     return (
-        <BlackButton {...props} variant={variant} startIcon={<GitHubIcon />}>GitHub</BlackButton>
+        <BlackButton variant={variant} onClick={onClick} startIcon={<GitHubIcon />} >GitHub</BlackButton>
     );
 }
+
+export const GitHubButton = Button;

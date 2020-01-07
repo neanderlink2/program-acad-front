@@ -1,17 +1,23 @@
-import React, { Props } from 'react';
+import React, { Props, useEffect } from 'react';
 import { Route } from 'react-router-dom'
-import Home from '../../../home';
-import { CounterScreen as Counter } from '../../../counter';
-import { HomeScreenProps } from '../../../home';
-import { LoginScreen } from '../../../login';
 import { routes } from '../../../../configs/routes';
+import { withAuth } from '../../../../components/firebase-wrapper';
+import { LoginRequiredScreen } from '../../../login-required';
+import { useUserData } from '../../../../components/hooks';
 
-export const Main = () => {
+const Main = ({ user }) => {
     return (
         <main>
-            {routes.map((route) => (
-                <Route key={route.path} exact path={route.path} render={(props) => <route.component {...props} title={route.title} />} />
-            ))}
+            {routes.map((route) => {
+                if (!route.onlyAuthenticated || (route.onlyAuthenticated && user)) {
+                    return (
+                        <Route key={route.path} exact path={route.path} render={(props) => <route.component {...props} title={route.title} />} />
+                    );
+                }
+                return (<Route key={route.path} exact path={route.path} component={LoginRequiredScreen} />);
+            })}
         </main>
     )
 }
+
+export default withAuth(Main);

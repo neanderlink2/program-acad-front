@@ -5,7 +5,7 @@ import { Language as LanguageIcon } from '@material-ui/icons';
 import { WhiteSection, LogoProgramAcad, CenterSection, SectionText } from './styles';
 import { Section } from './sections';
 import { withAuth } from '../../components/firebase-wrapper';
-import { useDocumentTitle } from '../../components/hooks/indes';
+import { useDocumentTitle } from '../../components/hooks';
 
 export interface HomeScreenProps extends WrappedComponentProps {
     title?: string
