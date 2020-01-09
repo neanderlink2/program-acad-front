@@ -2,9 +2,9 @@ import { withStyles, Button } from "@material-ui/core";
 
 export const RoyalBlueButton = withStyles(theme => ({
     root: {
-        padding: theme.spacing(1),
-        margin: theme.spacing(2),
+        margin: theme.spacing(1),
         color: '#fff',
+        flexGrow: 1,
         background: 'linear-gradient(#4e69a2, #3b5998 50%);',
         '&:hover': {
             backgroundColor: '#4267b2',
@@ -13,10 +13,10 @@ export const RoyalBlueButton = withStyles(theme => ({
 }))(Button);
 
 export const BlackButton = withStyles(theme => ({
-    root: {
-        padding: theme.spacing(1),
-        margin: theme.spacing(2),
+    root: {            
+        margin: theme.spacing(1),        
         color: '#fff',
+        flexGrow: 1,
         background: '#24292e',
         '&:hover': {
             backgroundColor: '#383d42',
@@ -26,9 +26,9 @@ export const BlackButton = withStyles(theme => ({
 
 export const WhiteButton = withStyles(theme => ({
     root: {
-        padding: theme.spacing(1),
-        margin: theme.spacing(2),
+        margin: theme.spacing(1),
         color: '#000',
+        flexGrow: 1,
         background: '#f0f0f0',
         '&:hover': {
             backgroundColor: '#d2d2d2',

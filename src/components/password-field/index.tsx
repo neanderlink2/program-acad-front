@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { TextField, TextFieldProps, InputAdornment, IconButton } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 
-export const PasswordField = ({ ...props }: TextFieldProps) => {
+type PasswordFieldProps = TextFieldProps & {
+    showVisibility?: boolean
+};
+
+export const PasswordField = ({ showVisibility = true, ...props }: PasswordFieldProps) => {
     const [showPassword, setShowPassword] = useState(false);
     return (
         <TextField
@@ -15,13 +19,17 @@ export const PasswordField = ({ ...props }: TextFieldProps) => {
                 evt.preventDefault();
             }}
             InputProps={{
-                endAdornment: (
-                    <InputAdornment position="end">
-                        <IconButton aria-label="Toggle password visibility" onClick={() => setShowPassword(!showPassword)}>
-                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                    </InputAdornment>
-                )
+                endAdornment:
+                    showVisibility ?
+                        (
+                            <InputAdornment position="end">
+                                <IconButton aria-label="Toggle password visibility" onClick={() => setShowPassword(!showPassword)}>
+                                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                        :
+                        null
             }}
         />
     )

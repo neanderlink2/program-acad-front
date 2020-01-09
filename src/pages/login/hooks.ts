@@ -3,13 +3,12 @@ import { useEffect } from 'react';
 import { useSnackbars } from '../../components/hooks/index';
 import { useHistory } from 'react-router-dom';
 
-export function useFeedbackUserLogin(error: any) {
-    const history = useHistory();
+export function useUserLoginFailed(code: any, cleanUp: () => void) {
     const { info, warning, error: snackError } = useSnackbars();
 
     useEffect(() => {
-        if (error && error.code) {
-            switch (error.code) {
+        if (code) {
+            switch (code) {
                 case firebaseErrorCodes.NOT_FOUND:
                     warning("Usuário ainda não cadastrado.");
                     break;
@@ -28,11 +27,20 @@ export function useFeedbackUserLogin(error: any) {
                     snackError("Houve um problema de conexão com o servidor de autenticação.");
                     break;
             }
-        } else {
-            if (error && error.user) {
-                history.push('/primeiro-acesso');
-                info(`Seja bem-vindo à Program.Acad, ${error.user.displayName}!`);
-            }
+
+            cleanUp();
         }
-    }, [error, snackError, info, warning, history]);
+    }, [code, cleanUp, snackError, info, warning]);
+}
+
+export function useUserLoginSuccess(user: any) {
+    const history = useHistory();
+    const { info, warning } = useSnackbars();
+
+    useEffect(() => {
+        if (user) {
+            history.push('/primeiro-acesso');
+            info(`Seja bem-vindo à Program.Acad, ${user.displayName}!`);
+        }
+    }, [user, info, warning, history]);
 }

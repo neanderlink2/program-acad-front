@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Card, CardContent, Typography, TextField } from '@material-ui/core';
+import { Container, Card, CardContent, Typography, TextField, Button } from '@material-ui/core';
 import { useDocumentTitle } from '../../components/hooks';
 import { GitHubButton } from '../../components/signin-buttons/github-button';
 import { GoogleButton } from '../../components/signin-buttons/google-button';
@@ -7,9 +7,11 @@ import { FacebookButton } from '../../components/signin-buttons/facebook-button'
 import { PasswordField } from '../../components/password-field';
 import { SimpleButton } from '../../components/signin-buttons/simple-button';
 import { WrappedComponentProps } from 'react-with-firebase-auth';
-import { useFeedbackUserLogin } from './hooks';
+import { useUserLoginFailed, useUserLoginSuccess } from './hooks';
 import { FlexEnd, FlexLine } from '../../components/flex-helpers/index';
 import { signInWithSimple, signInWithFacebook, signInWithGoogle, signInWithGithub } from '../../configs/firebaseConfig';
+import { ModalResetPassword } from './modal-confirm-reset-password';
+import { useHistory } from 'react-router-dom';
 
 interface LoginScreenProps extends WrappedComponentProps {
     title?: string,
@@ -23,36 +25,54 @@ interface LoginScreenProps extends WrappedComponentProps {
 const LoginScreen = ({ title, user, error }: LoginScreenProps) => {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
-    const [loginFeedback, setLoginFeedback] = useState(undefined);
+    const [errorCode, setErrorCode] = useState(undefined);
+    const [loginResult, setLoginResult] = useState(undefined);
+    const [showModal, setShowModal] = useState(false);
 
+    const history = useHistory();
     useDocumentTitle(title);
-    useFeedbackUserLogin(loginFeedback);
+    useUserLoginFailed(errorCode, () => {
+        setErrorCode(undefined)
+    });
+    useUserLoginSuccess(loginResult);
 
     function loginSenha() {
         signInWithSimple(email, senha)
             .then((response: any) => {
-                setLoginFeedback(response);
+                setLoginResult(response.user);
+            })
+            .catch((e: any) => {
+                setErrorCode(e.code);
             });
     }
 
     function loginFacebook() {
         signInWithFacebook()
             .then((response: any) => {
-                setLoginFeedback(response);
+                setLoginResult(response.user);
+            })
+            .catch((e: any) => {
+                setErrorCode(e.code);
             });
     }
 
     function loginGoogle() {
         signInWithGoogle()
             .then((response: any) => {
-                setLoginFeedback(response);
+                setLoginResult(response.user);
+            })
+            .catch((e: any) => {
+                setErrorCode(e.code);
             });
     }
 
     function loginGithub() {
         signInWithGithub()
             .then((response: any) => {
-                setLoginFeedback(response);
+                setLoginResult(response.user);
+            })
+            .catch((e: any) => {
+                setErrorCode(e.code);
             });
     }
 
@@ -84,10 +104,18 @@ const LoginScreen = ({ title, user, error }: LoginScreenProps) => {
                         value={senha}
                         onChange={({ target }) => setSenha(target.value)} />
                     <FlexEnd>
+                        <Button variant="text" style={{ marginRight: 20 }} onClick={() => setShowModal(true)}>Esqueceu sua senha?</Button>
                         <SimpleButton onClick={loginSenha} />
                     </FlexEnd>
+                    <FlexLine>
+                        <Typography>
+                            Ainda não tem uma conta? <Button variant="text" color="secondary" onClick={() => history.push("/cadastro")}>Crie uma agora</Button>
+                        </Typography>
+                    </FlexLine>
                 </CardContent>
             </Card>
+
+            <ModalResetPassword show={showModal} onClose={() => setShowModal(false)} />
         </Container>
     )
 }

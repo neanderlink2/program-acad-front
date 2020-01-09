@@ -10,15 +10,16 @@ const PrimeiroAcessoScreen = () => {
     const { isPrimeiroAcesso, user } = useUserData();
     const [nickname, setNickname] = useState('');
     const { warning } = useSnackbars();
-    const { adicionandoUsuarioExterno, erros, criarUsuarioExterno } = useAccountState(nickname);
+    const { adicionandoUsuarioExterno, cleanErrors, erros, criarUsuarioExterno } = useAccountState(nickname);
 
     useEffect(() => {
         if (erros && erros.length > 0) {
             for (let erro of erros) {
                 warning(erro);
             }
+            cleanErrors();
         }
-    }, [erros, warning]);
+    }, [erros, warning, cleanErrors]);
 
     if (isPrimeiroAcesso === null) {
         return (<LoadingScreen />);
@@ -46,7 +47,11 @@ const PrimeiroAcessoScreen = () => {
                             value={nickname}
                             onChange={({ target }) => setNickname(target.value)} />
                         <FlexEnd>
-                            <Button variant="contained" color="secondary" disabled={adicionandoUsuarioExterno} onClick={() => criarUsuarioExterno()}>
+                            <Button variant="contained" color="secondary" disabled={adicionandoUsuarioExterno} onClick={() => {
+                                if (criarUsuarioExterno) {
+                                    criarUsuarioExterno()
+                                }
+                            }}>
                                 {adicionandoUsuarioExterno && <CircularProgress color="inherit" size={24} style={{ marginRight: 15 }} />}
                                 Salvar meu apelido
                             </Button>

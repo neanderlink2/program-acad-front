@@ -32,7 +32,7 @@ firebaseAppAuth.onAuthStateChanged(
         }
     },
     (error: firebase.auth.Error) => {
-        console.log(error);
+        // console.log(error);
     }
 );
 
@@ -63,4 +63,8 @@ export const signInWithSimple = (email: string, password: string) => {
 export const signOut = () => {
     store.dispatch(removeUser());
     return firebaseAppAuth.signOut();
+}
+
+export const sendPasswordReset = (email: string) => {
+    return firebaseAppAuth.sendPasswordResetEmail(email);
 }

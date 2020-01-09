@@ -1,0 +1,71 @@
+import { ListagemTurma } from "../../models/turma";
+import { PagedList } from '../../models/pagedList';
+
+export const GET_TURMAS_REQUESTED = 'turmas/GetTurmasRequested';
+export const GET_TURMAS_SUCCEEDED = 'turmas/GetTurmasSucceeded';
+export const GET_TURMAS_FAILED = 'turmas/GetTurmasFailed';
+export const CHANGE_ORDENACAO = 'turmas/ChangeOrdenacao';
+export const CHANGE_DIRECAO_ORDENACAO = 'turmas/ChangeDirecaoOrdenacao';
+export const CHANGE_BUSCA = 'turmas/ChangeBusca';
+export const CHANGE_PAGE = 'turmas/ChangePage';
+export const CLEAN_TURMA_ERROS = 'turmas/CleanErros';
+
+export type BuscaTurmas = {
+    busca?: string,
+    pageIndex?: number,
+    totalItems?: number,
+    colunaOrdenacao?: 1 | 2,
+    direcaoOrdenacao?: "asc" | "desc"
+};
+
+export interface GetTurmasRequestedAction {
+    type: typeof GET_TURMAS_REQUESTED,
+    payload: BuscaTurmas
+}
+
+interface GetTurmasSucceededAction {
+    type: typeof GET_TURMAS_SUCCEEDED,
+    payload: PagedList<ListagemTurma>
+}
+
+interface GetTurmasFailedAction {
+    type: typeof GET_TURMAS_FAILED,
+    payload: string[]
+}
+
+interface ChangeOrdenacaoAction {
+    type: typeof CHANGE_ORDENACAO,
+    payload: 1 | 2
+}
+
+interface ChangeDirecaoOrdenacaoAction {
+    type: typeof CHANGE_DIRECAO_ORDENACAO,
+    payload: "asc" | "desc"
+}
+
+interface ChangeBuscaAction {
+    type: typeof CHANGE_BUSCA,
+    payload: string
+}
+
+interface ChangePageAction {
+    type: typeof CHANGE_PAGE,
+    payload: number
+}
+
+interface CleanErrosAction {
+    type: typeof CLEAN_TURMA_ERROS
+}
+
+export type TurmaState = {
+    listaTurmas?: PagedList<ListagemTurma>,
+    getTurmasPending: boolean,
+    search?: string,
+    pageNum?: number,
+    colunaOrdenacao?: 1 | 2,
+    direcaoOrdenacao?: "asc" | "desc",
+    erros: string[]
+}
+
+export type TurmaActionTypes = GetTurmasRequestedAction | GetTurmasSucceededAction | GetTurmasFailedAction | ChangeOrdenacaoAction |
+    ChangeDirecaoOrdenacaoAction | ChangeBuscaAction | ChangePageAction | CleanErrosAction; 

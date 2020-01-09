@@ -44,7 +44,7 @@ export const formatErrors = (error: AxiosError<ApiError[]>): string[] => {
             case 401:
                 return ["Não autorizado"];
             case 404:
-                return ["Não encontrado"];
+                return ["Nenhum dado foi encontrado"];
             default:
                 return ["Erro interno do servidor"];
         }
