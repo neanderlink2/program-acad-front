@@ -4,13 +4,18 @@ import { routerMiddleware } from 'connected-react-router'
 import thunk from 'redux-thunk'
 import { createBrowserHistory } from 'history'
 import { rootReducer } from '../modules'
+import createSagaMiddleware from 'redux-saga'
+import { rootSaga } from '../modules/index';
+
 
 export const history = createBrowserHistory()
+const saga = createSagaMiddleware();
 
 const initialState = {}
 const enhancers: any[] = []
 const middleware = [
     thunk,
+    saga,
     routerMiddleware(history)
 ]
 
@@ -34,6 +39,8 @@ const store = createStore(
     initialState,
     composedEnhancers
 );
+
+saga.run(rootSaga);
 
 export type RootState = ReturnType<typeof reducers>;
 

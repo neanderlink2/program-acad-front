@@ -1,27 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { withAuth } from '../../components/firebase-wrapper';
 import { Container, Card, CardContent, CircularProgress, Typography, TextField, Button } from '@material-ui/core';
-import { WrappedComponentProps } from 'react-with-firebase-auth';
-import { useUserData } from '../../components/hooks/index';
+import { useUserData, useSnackbars } from '../../components/hooks/index';
 import { Redirect } from 'react-router-dom';
 import { FlexEnd } from '../../components/flex-helpers';
 import { LoadingScreen } from '../../components/loading/index';
+import { useAccountState } from '../../modules/account/hooks';
 
-const PrimeiroAcessoScreen = ({ user }: WrappedComponentProps) => {
-    const data = useUserData(user);
-    const [isPrimeiroAcesso, setIsPrimeiroAcesso] = useState<any>(null);
+const PrimeiroAcessoScreen = () => {
+    const { isPrimeiroAcesso, user } = useUserData();
     const [nickname, setNickname] = useState('');
+    const { warning } = useSnackbars();
+    const { adicionandoUsuarioExterno, erros, criarUsuarioExterno } = useAccountState(nickname);
 
     useEffect(() => {
-        if (data.userClaims != null) {
-            setIsPrimeiroAcesso(!Boolean(data.userClaims.nickname));
+        if (erros && erros.length > 0) {
+            for (let erro of erros) {
+                warning(erro);
+            }
         }
-    }, [data]);
+    }, [erros, warning]);
 
     if (isPrimeiroAcesso === null) {
-        return (<LoadingScreen containerProps={{ style: { margin: 25 } }} />);
-    } else if (isPrimeiroAcesso === false) {
-        return (<Redirect to="/turmas" />)
+        return (<LoadingScreen />);
+    } else if (!isPrimeiroAcesso) {
+        return (<Redirect to="/turmas" />);
     } else {
         return (
             <Container>
@@ -44,7 +46,10 @@ const PrimeiroAcessoScreen = ({ user }: WrappedComponentProps) => {
                             value={nickname}
                             onChange={({ target }) => setNickname(target.value)} />
                         <FlexEnd>
-                            <Button variant="contained" color="secondary">Salvar meu apelido</Button>
+                            <Button variant="contained" color="secondary" disabled={adicionandoUsuarioExterno} onClick={() => criarUsuarioExterno()}>
+                                {adicionandoUsuarioExterno && <CircularProgress color="inherit" size={24} style={{ marginRight: 15 }} />}
+                                Salvar meu apelido
+                            </Button>
                         </FlexEnd>
                     </CardContent>
                 </Card>
@@ -55,4 +60,4 @@ const PrimeiroAcessoScreen = ({ user }: WrappedComponentProps) => {
 
 };
 
-export default withAuth(PrimeiroAcessoScreen);
+export default PrimeiroAcessoScreen;

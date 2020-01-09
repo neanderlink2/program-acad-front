@@ -1,11 +1,11 @@
-import React, { Props, useEffect } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom'
 import { routes } from '../../../../configs/routes';
-import { withAuth } from '../../../../components/firebase-wrapper';
 import { LoginRequiredScreen } from '../../../login-required';
 import { useUserData } from '../../../../components/hooks';
 
-const Main = ({ user }) => {
+const Main = () => {
+    const { user } = useUserData();
     return (
         <main>
             {routes.map((route) => {
@@ -20,4 +20,4 @@ const Main = ({ user }) => {
     )
 }
 
-export default withAuth(Main);
+export default Main;

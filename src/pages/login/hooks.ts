@@ -1,17 +1,15 @@
 import { firebaseErrorCodes } from '../../configs/firebaseConfig';
 import { useEffect } from 'react';
-import { useSnackbars, useUserData } from '../../components/hooks/index';
+import { useSnackbars } from '../../components/hooks/index';
 import { useHistory } from 'react-router-dom';
 
 export function useFeedbackUserLogin(error: any) {
-    const code = error ? error.code : undefined;
-
     const history = useHistory();
-    const { info, warning, error: snackError } = useSnackbars();    
+    const { info, warning, error: snackError } = useSnackbars();
 
     useEffect(() => {
-        if (code) {
-            switch (code) {
+        if (error && error.code) {
+            switch (error.code) {
                 case firebaseErrorCodes.NOT_FOUND:
                     warning("Usuário ainda não cadastrado.");
                     break;
@@ -33,8 +31,8 @@ export function useFeedbackUserLogin(error: any) {
         } else {
             if (error && error.user) {
                 history.push('/primeiro-acesso');
-                // info(`Seja bem-vindo à Program.Acad, ${error.user.displayName}!`);
+                info(`Seja bem-vindo à Program.Acad, ${error.user.displayName}!`);
             }
         }
-    }, [code, error]);
+    }, [error, snackError, info, warning, history]);
 }

@@ -1,19 +1,17 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import { AppBar, Toolbar, IconButton, Menu, MenuItem } from '@material-ui/core';
 import { Menu as MenuIcon, AccountCircle } from '@material-ui/icons';
 import { BotaoTopo, TituloTopo } from './styles';
-import { withAuth } from '../../../../components/firebase-wrapper';
-import { WrappedComponentProps } from 'react-with-firebase-auth';
 import { bindTrigger, bindMenu, usePopupState } from 'material-ui-popup-state/hooks';
 import { useHistory } from 'react-router-dom';
 import { useUserData } from '../../../../components/hooks/index';
+import { signOut } from '../../../../configs/firebaseConfig';
 
-interface HeaderProps extends WrappedComponentProps {
-    signOut: () => Promise<void | Error> | void;
-};
 
-const Header = ({ user, signOut }: HeaderProps) => {
+const Header = () => {
     const history = useHistory();
+    const { user } = useUserData();
+
     return (
         <AppBar position="static">
             <Toolbar>
@@ -64,9 +62,9 @@ const NonAuthenticatedMenu = () => {
     return (
         <Fragment>
             <BotaoTopo onClick={() => history.push("/login")}>Entrar</BotaoTopo>
-            <BotaoTopo variant="contained" color="secondary">Começar agora</BotaoTopo>
+            <BotaoTopo variant="contained" color="secondary" onClick={() => history.push("/cadastro")}>Começar agora</BotaoTopo>
         </Fragment>
     )
 }
 
-export default withAuth(Header);
+export default Header;

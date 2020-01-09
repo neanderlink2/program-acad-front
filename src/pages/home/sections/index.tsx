@@ -1,5 +1,5 @@
 import React from 'react';
-import { CenterSection, SectionTitle, SectionText, LogoProgramAcad } from '../styles';
+import { CenterSection, SectionTitle } from '../styles';
 import { Container } from '@material-ui/core';
 
 type SectionProps = { title: string, startImage?: React.ReactNode, endImage?: React.ReactNode, align?: "left" | "right" | "center" }

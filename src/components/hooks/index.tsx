@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../configs/middlewares';
 
 export const useDocumentTitle = (title?: string) => {
     useEffect(() => {
@@ -31,23 +32,27 @@ export const useSnackbars = () => {
     }
 }
 
-export const useUserData = (user?: firebase.User) => {
+export const useUserData = () => {
+    const userToken = useSelector((states: RootState) => states.login.user);
+
     const [userClaims, setUserClaims] = useState<any>(null);
     const [token, setToken] = useState<string>('');
-    
+    const [isPrimeiroAcesso, setIsPrimeiroAcesso] = useState<any>(null);
+
     useEffect(() => {
-        if (user) {
-            user.getIdTokenResult(true)
+        if (userToken) {
+            userToken.user.getIdTokenResult(true)
                 .then((result) => {
                     setUserClaims(result.claims);
                     setToken(result.token);
+                    setIsPrimeiroAcesso(!Boolean(result.claims.nickname));
                 });
         }
-
         return () => {
             setUserClaims(null);
             setToken('');
+            setIsPrimeiroAcesso(null);
         }
-    }, [user]);
-    return { userClaims, token };
+    }, [userToken]);
+    return { userClaims, user: userToken ? userToken.user : undefined, token, isPrimeiroAcesso };
 }

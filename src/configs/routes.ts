@@ -4,6 +4,7 @@ import LoginScreen from '../pages/login';
 import { CounterScreen } from '../pages/counter';
 import TurmaScreen from '../pages/turmas/index';
 import PrimeiroAcessoScreen from '../pages/primeiro-acesso';
+import { CadastroScreen } from '../pages/cadastro/index';
 
 type RouteModel = {
     path: string,
@@ -23,6 +24,12 @@ export const routes: RouteModel[] = [
         path: '/login',
         component: LoginScreen,
         title: 'Entre em sua conta',
+        onlyAuthenticated: false
+    },
+    {
+        path: '/cadastro',
+        component: CadastroScreen,
+        title: 'Comece agora mesmo! - Program.Acad',
         onlyAuthenticated: false
     },
     {

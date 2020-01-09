@@ -1,17 +1,14 @@
-import React, { Fragment, useEffect } from 'react';
-import { WrappedComponentProps } from 'react-with-firebase-auth';
-import { Typography, Container, Grid, Box } from '@material-ui/core';
-import { Language as LanguageIcon } from '@material-ui/icons';
+import React, { Fragment } from 'react';
+import { Typography, Container } from '@material-ui/core';
 import { WhiteSection, LogoProgramAcad, CenterSection, SectionText } from './styles';
 import { Section } from './sections';
-import { withAuth } from '../../components/firebase-wrapper';
 import { useDocumentTitle } from '../../components/hooks';
 
-export interface HomeScreenProps extends WrappedComponentProps {
+export interface HomeScreenProps {
     title?: string
 }
 
-const HomeScreen = ({ user, signInWithGoogle, title }: HomeScreenProps) => {
+const HomeScreen = ({ title }: HomeScreenProps) => {
     useDocumentTitle(title);
 
     return (
@@ -42,4 +39,4 @@ const HomeScreen = ({ user, signInWithGoogle, title }: HomeScreenProps) => {
     );
 }
 
-export default withAuth(HomeScreen);
+export default HomeScreen;

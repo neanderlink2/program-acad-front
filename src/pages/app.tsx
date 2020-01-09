@@ -4,7 +4,7 @@ import { ConnectedRouter } from 'connected-react-router'
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { SnackbarProvider } from 'notistack';
 
-import store, { history } from '../configs/store';
+import store, { history } from '../configs/middlewares';
 import { Layout } from './shared/layout';
 import programAcadTheme from '../configs/theme';
 

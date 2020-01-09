@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../configs/store';
+import { RootState } from '../../configs/middlewares';
 import { increment, decrement } from './actions';
 
 export function useContagemState() {

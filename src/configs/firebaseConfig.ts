@@ -1,7 +1,9 @@
 import 'firebase/auth';
 import firebase from 'firebase/app';
+import store from './middlewares';
+import { storeUser, removeUser } from '../modules/login/actions';
 
-export const firebaseConfig = {
+const firebaseConfig = {
     apiKey: "AIzaSyDUlqW3Y4a0Gaz2TNgYQrEmS5PT6-4qLNY",
     authDomain: "program-acad.firebaseapp.com",
     databaseURL: "https://program-acad.firebaseio.com",
@@ -12,13 +14,27 @@ export const firebaseConfig = {
     measurementId: "G-ZQ33KPF8CM"
 };
 
-export const firebaseApp = firebase.initializeApp(firebaseConfig);
-export const firebaseAppAuth = firebaseApp.auth();
-export const providers = {
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const firebaseAppAuth = firebaseApp.auth();
+const authenticationProviders = {
     googleProvider: new firebase.auth.GoogleAuthProvider(),
     githubProvider: new firebase.auth.GithubAuthProvider(),
     facebookProvider: new firebase.auth.FacebookAuthProvider()
 };
+
+firebaseAppAuth.onAuthStateChanged(
+    (user) => {
+        if (user) {
+            user.getIdTokenResult()
+                .then(result => {
+                    store.dispatch(storeUser({ user: user, token: result.token }))
+                })
+        }
+    },
+    (error: firebase.auth.Error) => {
+        console.log(error);
+    }
+);
 
 export const firebaseErrorCodes = {
     NOT_FOUND: "auth/user-not-found",
@@ -27,3 +43,24 @@ export const firebaseErrorCodes = {
     ACCOUNT_EXISTING: "auth/account-exists-with-different-credential",
     POPUP_CLOSED: "auth/popup-closed-by-user"
 };
+
+export const signInWithFacebook = () => {
+    return firebaseAppAuth.signInWithPopup(authenticationProviders.facebookProvider);
+}
+
+export const signInWithGoogle = () => {
+    return firebaseAppAuth.signInWithPopup(authenticationProviders.googleProvider);
+}
+
+export const signInWithGithub = () => {
+    return firebaseAppAuth.signInWithPopup(authenticationProviders.githubProvider);
+}
+
+export const signInWithSimple = (email: string, password: string) => {
+    return firebaseAppAuth.signInWithEmailAndPassword(email, password);
+}
+
+export const signOut = () => {
+    store.dispatch(removeUser());
+    return firebaseAppAuth.signOut();
+}

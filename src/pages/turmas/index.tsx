@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Container, CircularProgress } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import { useUserData } from '../../components/hooks/index';
-import { withAuth } from '../../components/firebase-wrapper';
-import { WrappedComponentProps } from 'react-with-firebase-auth';
+import { Redirect } from 'react-router-dom';
+import { LoadingScreen } from '../../components/loading/index';
 
-const TurmaScreen = ({ user }: WrappedComponentProps) => {
-    const data = useUserData(user);
+const TurmaScreen = () => {
+    const { userClaims, isPrimeiroAcesso } = useUserData();
     const [userNickname, setNickname] = useState('');
 
     useEffect(() => {
-        if (data.userClaims) {
-            setNickname(data.userClaims.nickname);
+        if (userClaims) {
+            setNickname(userClaims.nickname);
         }
-    }, [data]);
+    }, [userClaims]);
 
-    if (!data.userClaims) {
-        return <CircularProgress color="secondary" />
+    if (isPrimeiroAcesso === null) {
+        return (<LoadingScreen style={{ margin: 15 }} />);
+    } else if (isPrimeiroAcesso) {
+        return <Redirect to="/primeiro-acesso" />
     }
 
     return (
@@ -26,4 +28,4 @@ const TurmaScreen = ({ user }: WrappedComponentProps) => {
 };
 
 
-export default withAuth(TurmaScreen);
+export default TurmaScreen;

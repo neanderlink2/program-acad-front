@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { Container, Box, Typography } from '@material-ui/core';
+import React from 'react';
+import { Container, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
 import logo from '../../assets/logo-only.png';

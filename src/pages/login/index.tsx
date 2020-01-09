@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Container, Card, CardContent, Typography, TextField } from '@material-ui/core';
 import { useDocumentTitle } from '../../components/hooks';
 import { GitHubButton } from '../../components/signin-buttons/github-button';
@@ -7,9 +7,9 @@ import { FacebookButton } from '../../components/signin-buttons/facebook-button'
 import { PasswordField } from '../../components/password-field';
 import { SimpleButton } from '../../components/signin-buttons/simple-button';
 import { WrappedComponentProps } from 'react-with-firebase-auth';
-import { withAuth } from '../../components/firebase-wrapper';
 import { useFeedbackUserLogin } from './hooks';
 import { FlexEnd, FlexLine } from '../../components/flex-helpers/index';
+import { signInWithSimple, signInWithFacebook, signInWithGoogle, signInWithGithub } from '../../configs/firebaseConfig';
 
 interface LoginScreenProps extends WrappedComponentProps {
     title?: string,
@@ -20,48 +20,40 @@ interface LoginScreenProps extends WrappedComponentProps {
     signInWithEmailAndPassword: (email: string, password: string) => Promise<Error | firebase.auth.UserCredential> | void;
 }
 
-const LoginScreen = ({ title, user, error, signInWithEmailAndPassword, signInWithFacebook, signInWithGoogle, signInWithGithub }: LoginScreenProps) => {
+const LoginScreen = ({ title, user, error }: LoginScreenProps) => {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
-    const [errorCode, setErrorCode] = useState(undefined);
+    const [loginFeedback, setLoginFeedback] = useState(undefined);
 
     useDocumentTitle(title);
-    useFeedbackUserLogin(errorCode);
+    useFeedbackUserLogin(loginFeedback);
 
     function loginSenha() {
-        if (typeof signInWithEmailAndPassword === typeof Promise) {
-            (signInWithEmailAndPassword(email, senha) as Promise<Error | firebase.auth.UserCredential>)
-                .then((response: any) => {
-                    setErrorCode(response);
-                });
-        }
+        signInWithSimple(email, senha)
+            .then((response: any) => {
+                setLoginFeedback(response);
+            });
     }
 
     function loginFacebook() {
-        if (typeof signInWithFacebook === typeof Promise) {
-            (signInWithFacebook() as Promise<Error | firebase.auth.UserCredential>)
-                .then((response: any) => {
-                    setErrorCode(response);
-                });
-        }
+        signInWithFacebook()
+            .then((response: any) => {
+                setLoginFeedback(response);
+            });
     }
 
     function loginGoogle() {
-        if (typeof signInWithGoogle === typeof Promise) {
-            (signInWithGoogle() as Promise<Error | firebase.auth.UserCredential>)
-                .then((response: any) => {
-                    setErrorCode(response);
-                });
-        }
+        signInWithGoogle()
+            .then((response: any) => {
+                setLoginFeedback(response);
+            });
     }
 
     function loginGithub() {
-        if (typeof signInWithGithub === typeof Promise) {
-            (signInWithGithub() as Promise<Error | firebase.auth.UserCredential>)
-                .then((response: any) => {
-                    setErrorCode(response);
-                });
-        }
+        signInWithGithub()
+            .then((response: any) => {
+                setLoginFeedback(response);
+            });
     }
 
     return (
@@ -100,4 +92,4 @@ const LoginScreen = ({ title, user, error, signInWithEmailAndPassword, signInWit
     )
 }
 
-export default withAuth(LoginScreen);
+export default LoginScreen;
