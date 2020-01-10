@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TextField, InputAdornment, IconButton, MenuItem, Tooltip } from '@material-ui/core';
 import { TextRotateUp, TextRotationDown } from '@material-ui/icons';
 

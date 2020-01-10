@@ -1,9 +1,18 @@
 import React from 'react';
 import { Container, CardContent, Card, Typography, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import { useDocumentTitle, useUserData } from '../../components/hooks';
+import { LoadingScreen } from '../../components/loading';
 
-export const LoginRequiredScreen = () => {
+export const LoginRequiredScreen = ({ title }: { title: string }) => {
+    useDocumentTitle(title);
     const history = useHistory();
+    const { isPrimeiroAcesso } = useUserData();
+
+    if (isPrimeiroAcesso === null) {
+        return (<LoadingScreen style={{ margin: 25 }} />);
+    }
+
     return (
         <Container>
             <Card>

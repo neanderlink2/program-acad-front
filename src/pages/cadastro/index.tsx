@@ -4,7 +4,7 @@ import { PasswordField } from '../../components/password-field/index';
 import { FlexEnd } from '../../components/flex-helpers';
 import { ExitToApp as AddIcon } from '@material-ui/icons';
 import { useAccountState } from '../../modules/account/hooks';
-import { useSnackbars } from '../../components/hooks/index';
+import { useSnackbars, useDocumentTitle } from '../../components/hooks/index';
 import { useUserLoginFailed, useUserLoginSuccess } from '../login/hooks';
 import { signInWithFacebook, signInWithGoogle, signInWithGithub } from '../../configs/firebaseConfig';
 import { FlexLine } from '../../components/flex-helpers/index';
@@ -12,7 +12,7 @@ import { GoogleButton } from '../../components/signin-buttons/google-button/inde
 import { FacebookButton } from '../../components/signin-buttons/facebook-button/index';
 import { GitHubButton } from '../../components/signin-buttons/github-button/index';
 
-export const CadastroScreen = () => {
+export const CadastroScreen = ({ title }: { title: string }) => {
     const [nomeCompleto, setNomeCompleto] = useState('');
     const [email, setEmail] = useState('');
     const [nickname, setNickname] = useState('');
@@ -22,6 +22,7 @@ export const CadastroScreen = () => {
     const [errorCode, setErrorCode] = useState(undefined);
     const [loginResult, setLoginResult] = useState(undefined);
 
+    useDocumentTitle(title);
     const { warning } = useSnackbars();
     const { adicionandoUsuarioInterno, cleanErrors, erros, criarUsuarioInterno } = useAccountState(undefined, {
         email,

@@ -1,6 +1,4 @@
-import React, { Fragment, useMemo, useEffect } from 'react';
-import { useTurmaState } from '../../../modules/turmas/hooks';
-import { ListagemTurma } from '../../../models/turma';
+import React, { Fragment, useMemo } from 'react';
 import { Grid, Button, ButtonGroup } from '@material-ui/core';
 import { LoadingItem } from './loading-item';
 import { GridItem } from './grid-item/index';
@@ -23,7 +21,7 @@ export const PaginatedGrid = ({ pagedList, isLoading = false, onPageChange }: Pa
             }
             return pagination;
         }
-    }, [pagedList]);
+    }, [pagedList, onPageChange]);
 
     return (
         <Grid container>
@@ -43,20 +41,23 @@ export const PaginatedGrid = ({ pagedList, isLoading = false, onPageChange }: Pa
             }
             <Grid item xs={12} style={{ padding: 10, textAlign: 'right' }}>
                 {
-                    <ButtonGroup color="secondary" aria-label="outlined primary button group">
-                        <Button disabled={pagedList ? !pagedList.hasPreviousPage : true} onClick={() => {
-                            if (pagedList) {
-                                onPageChange(pagedList.pageIndex - 1);
-                            }
-                        }}> Voltar </Button>
-                        {pagination}
-                        <Button disabled={pagedList ? !pagedList.hasNextPage : true}
-                            onClick={() => {
+                    isLoading ?
+                        null
+                        :
+                        <ButtonGroup color="secondary" aria-label="outlined primary button group">
+                            <Button disabled={pagedList ? !pagedList.hasPreviousPage : true} onClick={() => {
                                 if (pagedList) {
-                                    onPageChange(pagedList.pageIndex + 1);
+                                    onPageChange(pagedList.pageIndex - 1);
                                 }
-                            }}> Próximo </Button>
-                    </ButtonGroup>
+                            }}> Voltar </Button>
+                            {pagination}
+                            <Button disabled={pagedList ? !pagedList.hasNextPage : true}
+                                onClick={() => {
+                                    if (pagedList) {
+                                        onPageChange(pagedList.pageIndex + 1);
+                                    }
+                                }}> Próximo </Button>
+                        </ButtonGroup>
                 }
             </Grid>
         </Grid>

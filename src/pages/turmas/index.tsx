@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Typography, TextField, MenuItem, InputAdornment, IconButton, Grid, Card, CardActionArea, CardMedia, CardContent, CardActions, Button } from '@material-ui/core';
-import { useUserData, useSnackbars } from '../../components/hooks/index';
+import { Container, Typography, TextField } from '@material-ui/core';
+import { useUserData, useDocumentTitle } from '../../components/hooks/index';
 import { Redirect } from 'react-router-dom';
 import { LoadingScreen } from '../../components/loading/index';
 import { FlexLine } from '../../components/flex-helpers/index';
 import { OrdenacaoSelect } from './ordenacao-select';
-import { Edit, ExitToApp } from '@material-ui/icons';
 import { PaginatedGrid } from './paginated-grid/index';
 import { useTurmaState } from '../../modules/turmas/hooks';
 
-const TurmaScreen = () => {
+const TurmaScreen = ({ title }: { title: string }) => {
+    useDocumentTitle(title);
     const [busca, setBusca] = useState('');
     const [paginaAtual, setPaginaAtual] = useState(0);
     const [ordenacao, setOrdenacao] = useState<1 | 2>(1);
@@ -19,23 +19,18 @@ const TurmaScreen = () => {
     const [userNickname, setNickname] = useState('');
 
 
-    const { turmas, erros, isBuscandoTurmas, limparErros } = useTurmaState({
+    const { turmas, isBuscandoTurmas } = useTurmaState({
         busca,
         pageIndex: paginaAtual,
         colunaOrdenacao: ordenacao,
         direcaoOrdenacao: direcaoOrdenacao
     });
 
-    const { warning } = useSnackbars();
-
     useEffect(() => {
-        if (erros && erros.length > 0) {
-            for (let erro of erros) {
-                warning(erro);
-            }
-            limparErros();
+        if (turmas && turmas.pageIndex > turmas.totalPages - 1) {
+            setPaginaAtual(0);
         }
-    }, [erros, warning, limparErros]);
+    }, [turmas])
 
     useEffect(() => {
         if (user && user.displayName) {
@@ -75,7 +70,13 @@ const TurmaScreen = () => {
                     onChangeDirecao={() => setDirecaoOrdenacao(direcaoOrdenacao === "asc" ? "desc" : "asc")} />
             </FlexLine>
 
-            <PaginatedGrid isLoading={isBuscandoTurmas} pagedList={turmas} onPageChange={(index) => setPaginaAtual(index)} />
+            {
+                turmas && turmas.items.length > 0 ?
+                    <PaginatedGrid isLoading={isBuscandoTurmas} pagedList={turmas} onPageChange={(index) => setPaginaAtual(index)} />
+                    :
+                    <Typography component="small">Nenhuma turma foi encontrada...</Typography>
+            }
+
 
         </Container>
     );

@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Card, CardContent, CircularProgress, Typography, TextField, Button } from '@material-ui/core';
-import { useUserData, useSnackbars } from '../../components/hooks/index';
+import { useUserData, useSnackbars, useDocumentTitle } from '../../components/hooks/index';
 import { Redirect } from 'react-router-dom';
 import { FlexEnd } from '../../components/flex-helpers';
 import { LoadingScreen } from '../../components/loading/index';
 import { useAccountState } from '../../modules/account/hooks';
 
-const PrimeiroAcessoScreen = () => {
+const PrimeiroAcessoScreen = ({ title }: { title: string }) => {
     const { isPrimeiroAcesso, user } = useUserData();
     const [nickname, setNickname] = useState('');
     const { warning } = useSnackbars();
     const { adicionandoUsuarioExterno, cleanErrors, erros, criarUsuarioExterno } = useAccountState(nickname);
-
+    useDocumentTitle(title);
     useEffect(() => {
         if (erros && erros.length > 0) {
             for (let erro of erros) {

@@ -1,7 +1,6 @@
 import React from 'react';
 import HomeScreen from '../pages/home'
 import LoginScreen from '../pages/login';
-import { CounterScreen } from '../pages/counter';
 import TurmaScreen from '../pages/turmas/index';
 import PrimeiroAcessoScreen from '../pages/primeiro-acesso';
 import { CadastroScreen } from '../pages/cadastro/index';
@@ -30,12 +29,6 @@ export const routes: RouteModel[] = [
         path: '/cadastro',
         component: CadastroScreen,
         title: 'Comece agora mesmo! - Program.Acad',
-        onlyAuthenticated: false
-    },
-    {
-        path: '/counter',
-        component: CounterScreen,
-        title: 'Tela de testes com o redux',
         onlyAuthenticated: false
     },
     {
