@@ -10,6 +10,8 @@ export const CHANGE_BUSCA = 'turmas/ChangeBusca';
 export const CHANGE_PAGE = 'turmas/ChangePage';
 export const CLEAN_TURMA_ERROS = 'turmas/CleanErros';
 
+//Ordem 1: Nome
+//Ordem 2: DataTermino
 export type BuscaTurmas = {
     busca?: string,
     pageIndex?: number,

@@ -16,7 +16,7 @@ const TurmaScreen = ({ title }: { title: string }) => {
     const [direcaoOrdenacao, setDirecaoOrdenacao] = useState<'asc' | 'desc'>('asc');
 
     const { user, isPrimeiroAcesso } = useUserData();
-    const [userNickname, setNickname] = useState('');
+    const [userName, setUserName] = useState('');
 
 
     const { turmas, isBuscandoTurmas } = useTurmaState({
@@ -34,7 +34,7 @@ const TurmaScreen = ({ title }: { title: string }) => {
 
     useEffect(() => {
         if (user && user.displayName) {
-            setNickname(user.displayName);
+            setUserName(user.displayName);
         }
     }, [user]);
 
@@ -46,7 +46,7 @@ const TurmaScreen = ({ title }: { title: string }) => {
 
     return (
         <Container>
-            <Typography variant="h5" style={{ marginTop: 15 }}>Olá {userNickname}, seja bem-vindo à Program.Acad!</Typography>
+            <Typography variant="h5" style={{ marginTop: 15 }}>Olá {userName}, seja bem-vindo à Program.Acad!</Typography>
             <FlexLine style={{ justifyContent: 'space-between' }}>
                 <TextField
                     label="Buscar turmas"
@@ -69,15 +69,7 @@ const TurmaScreen = ({ title }: { title: string }) => {
                     }}
                     onChangeDirecao={() => setDirecaoOrdenacao(direcaoOrdenacao === "asc" ? "desc" : "asc")} />
             </FlexLine>
-
-            {
-                turmas && turmas.items.length > 0 ?
-                    <PaginatedGrid isLoading={isBuscandoTurmas} pagedList={turmas} onPageChange={(index) => setPaginaAtual(index)} />
-                    :
-                    <Typography component="small">Nenhuma turma foi encontrada...</Typography>
-            }
-
-
+            <PaginatedGrid isLoading={isBuscandoTurmas} pagedList={turmas} onPageChange={(index) => setPaginaAtual(index)} />
         </Container>
     );
 };

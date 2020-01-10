@@ -1,5 +1,5 @@
 import React, { Fragment, useMemo } from 'react';
-import { Grid, Button, ButtonGroup } from '@material-ui/core';
+import { Grid, Button, ButtonGroup, Typography } from '@material-ui/core';
 import { LoadingItem } from './loading-item';
 import { GridItem } from './grid-item/index';
 import { PagedList } from '../../../models/pagedList';
@@ -29,15 +29,18 @@ export const PaginatedGrid = ({ pagedList, isLoading = false, onPageChange }: Pa
                 isLoading ?
                     <Fragment><LoadingItem /><LoadingItem /><LoadingItem /></Fragment>
                     :
-                    pagedList && pagedList.items.map((turma) => {
-                        return <GridItem key={turma.id}
-                            image={turma.imagemTurma}
-                            imageAlt={turma.titulo}
-                            instrutor={turma.nomeInstrutor}
-                            isUsuarioInscrito={turma.isUsuarioInscrito}
-                            dataHoraTermino={turma.dataTermino}
-                            title={turma.titulo} />
-                    })
+                    pagedList && pagedList.items.length <= 0 ?
+                        <Typography component="small">Nenhuma turma foi encontrada...</Typography>
+                        :
+                        pagedList && pagedList.items.map((turma) => {
+                            return <GridItem key={turma.id}
+                                image={turma.imagemTurma}
+                                imageAlt={turma.titulo}
+                                instrutor={turma.nomeInstrutor}
+                                isUsuarioInscrito={turma.isUsuarioInscrito}
+                                dataHoraTermino={turma.dataTermino}
+                                title={turma.titulo} />
+                        })
             }
             <Grid item xs={12} style={{ padding: 10, textAlign: 'right' }}>
                 {

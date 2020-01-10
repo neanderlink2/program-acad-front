@@ -12,6 +12,7 @@ api.interceptors.request.use(async config => {
     const user = store.getState().login.user;
 
     if (user && user.token) {
+        console.log(user.token);
         config.headers.Authorization = `Bearer ${user.token}`;
     }
     return config;
