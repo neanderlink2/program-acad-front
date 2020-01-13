@@ -8,16 +8,22 @@ import { PagedList } from '../../models/pagedList';
 
 export function* getAlgoritmosPaginadas({ payload }: GetAlgoritmosRequestedAction) {
     try {
-        const turma = payload.idTurma;
-        delete payload.idTurma;
-        delete payload.linguagensVisualizacao;
-        const response: AxiosResponse<PagedList<ListagemAlgoritmo>> = yield call(getRequest, `/v1/algoritmos/turma/${turma}`, payload);
-        yield put(confirmarAlgoritmosRecebidos(response.data));
+        const data = {
+            busca: payload.busca,
+            numPagina: payload.pageIndex,
+            qtdePorPagina: payload.totalItems,
+            colunasOrdenacao: payload.colunaOrdenacao,
+            direcaoOrdenacao: payload.direcaoOrdenacao
+        }
+        if (Boolean(payload.idTurma)) {
+            const response: AxiosResponse<PagedList<ListagemAlgoritmo>> = yield call(getRequest, `/v1/algoritmos/turma/${payload.idTurma}`, data);
+            yield put(confirmarAlgoritmosRecebidos(response.data));
+        }
     } catch (error) {
         yield put(informarFalhaAlgoritmosRecebidos(formatErrors(error)));
     }
 }
 
-export const turmaSaga = all([
+export const algoritmoSaga = all([
     takeLatest(GET_ALGORITMOS_REQUESTED, getAlgoritmosPaginadas)
 ]);

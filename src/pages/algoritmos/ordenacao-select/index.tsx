@@ -41,7 +41,7 @@ export const OrdenacaoSelect = ({ ordenacao, direcao, onChangeOrdenacao, onChang
             }}
         >
             <MenuItem value={1}>Ordenar por Nome</MenuItem>
-            <MenuItem value={2}>Ordenar por Data de Encerramento</MenuItem>
+            <MenuItem value={2}>Ordenar por Data de criação</MenuItem>
         </TextField>
     )
 }

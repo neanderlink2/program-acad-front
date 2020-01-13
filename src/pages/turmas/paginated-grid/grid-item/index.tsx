@@ -11,15 +11,16 @@ type GridItemProps = {
     instrutor: any,
     dataHoraTermino: any,
     isUsuarioInscrito: any,
-    key?: any
+    key?: any,
+    onItemClicked: () => void
 }
 
-export const GridItem = ({ key, image, imageAlt, title, dataHoraTermino, instrutor, isUsuarioInscrito }: GridItemProps) => {
+export const GridItem = ({ image, imageAlt, title, dataHoraTermino, instrutor, isUsuarioInscrito, onItemClicked }: GridItemProps) => {
     const date = new Date(dataHoraTermino);
     const dataFormatada = `${format(date, 'dd/MM/yyyy')} às ${format(date, 'hh:mm')}`;
 
     return (
-        <Grid key={key} item xs={12} sm={6} lg={4} style={{ padding: 5 }}>
+        <Grid item xs={12} sm={6} lg={4} style={{ padding: 5 }}>
             <Card>
                 <CardMedia
                     image={image}
@@ -27,15 +28,15 @@ export const GridItem = ({ key, image, imageAlt, title, dataHoraTermino, instrut
                     style={{ height: 150 }}
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">{title}</Typography>
+                    <Typography variant="h5" component="h2">{title}</Typography>
                     <Typography variant="body2" color="textSecondary" component="p">Ministrado por {instrutor}</Typography>
                     <FlexLine style={{ justifyContent: 'space-between' }}>
                         <Typography variant="body2" color="textSecondary">Encerra em {dataFormatada}</Typography>
                         {
                             isUsuarioInscrito ?
-                                <Button color="secondary" variant="contained" startIcon={<ExitToApp />}> Entrar</Button>
+                                <Button color="secondary" variant="contained" startIcon={<ExitToApp />} onClick={onItemClicked}> Entrar</Button>
                                 :
-                                <Button color="secondary" variant="outlined" startIcon={<Edit />}> Inscrever-se</Button>
+                                <Button color="secondary" variant="outlined" startIcon={<Edit />} onClick={onItemClicked}> Inscrever-se</Button>
                         }
                     </FlexLine>
                 </CardContent>

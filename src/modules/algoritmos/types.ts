@@ -9,6 +9,7 @@ export const CHANGE_DIRECAO_ORDENACAO_ALGORITMOS = 'algoritmos/ChangeDirecaoOrde
 export const CHANGE_BUSCA_ALGORITMOS = 'algoritmos/ChangeBusca';
 export const CHANGE_PAGE_ALGORITMOS = 'algoritmos/ChangePage';
 export const CLEAN_ALGORITMOS_ERROS = 'algoritmos/CleanErros';
+export const CHANGE_ALGORITMOS = 'algoritmos/CleanErros';
 
 type LinguagensVisualizacao = {
     javaScript: boolean,
@@ -75,7 +76,7 @@ export type AlgoritmoState = {
     pageNum?: number,
     colunaOrdenacao?: 1 | 2,
     direcaoOrdenacao?: "asc" | "desc",
-    erros: string[]
+    erros: string[]    
 }
 
 export type AlgoritmoActionTypes = GetAlgoritmosRequestedAction | GetAlgoritmosSucceededAction | GetAlgoritmosFailedAction | ChangeOrdenacaoAlgoritmoAction |

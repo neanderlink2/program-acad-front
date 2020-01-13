@@ -1,4 +1,4 @@
-import { TurmaActionTypes, GET_TURMAS_REQUESTED, BuscaTurmas, GET_TURMAS_SUCCEEDED, GET_TURMAS_FAILED, CHANGE_PAGE, CHANGE_ORDENACAO, CHANGE_DIRECAO_ORDENACAO, CHANGE_BUSCA, CLEAN_TURMA_ERROS } from './types';
+import { TurmaActionTypes, GET_TURMAS_REQUESTED, BuscaTurmas, GET_TURMAS_SUCCEEDED, GET_TURMAS_FAILED, CHANGE_PAGE, CHANGE_ORDENACAO, CHANGE_DIRECAO_ORDENACAO, CHANGE_BUSCA, CLEAN_TURMA_ERROS, CHANGE_TURMA_SELECIONADA } from './types';
 import { PagedList } from '../../models/pagedList';
 import { ListagemTurma } from '../../models/turma';
 
@@ -54,5 +54,12 @@ export const alterarBusca = (busca: string) => {
 export const limparErros = () => {
     return {
         type: CLEAN_TURMA_ERROS
+    }
+}
+
+export const selecionarTurma = (idTurma: string) => {
+    return {
+        type: CHANGE_TURMA_SELECIONADA,
+        payload: idTurma
     }
 }

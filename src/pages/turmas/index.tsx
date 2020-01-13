@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Typography, TextField } from '@material-ui/core';
-import { useUserData, useDocumentTitle } from '../../components/hooks/index';
-import { Redirect } from 'react-router-dom';
+import { useUserData, useDocumentTitle, useSnackbars } from '../../components/hooks/index';
+import { Redirect, useHistory } from 'react-router-dom';
 import { LoadingScreen } from '../../components/loading/index';
 import { FlexLine } from '../../components/flex-helpers/index';
 import { OrdenacaoSelect } from './ordenacao-select';
@@ -17,9 +17,12 @@ const TurmaScreen = ({ title }: { title: string }) => {
 
     const { user, isPrimeiroAcesso } = useUserData();
     const [userName, setUserName] = useState('');
+    const [turmaSelecionada, setTurmaSelecionada] = useState('');
 
+    const history = useHistory();
+    const { success } = useSnackbars();
 
-    const { turmas, isBuscandoTurmas } = useTurmaState({
+    const { turmas, isBuscandoTurmas, escolherTurma } = useTurmaState({
         busca,
         pageIndex: paginaAtual,
         colunaOrdenacao: ordenacao,
@@ -54,7 +57,7 @@ const TurmaScreen = ({ title }: { title: string }) => {
                     margin="normal"
                     type="search"
                     color="secondary"
-                    style={{ width: '35%' }}
+                    style={{ width: '45%' }}
                     value={busca}
                     onChange={({ target }) => setBusca(target.value)}
                 />
@@ -69,7 +72,17 @@ const TurmaScreen = ({ title }: { title: string }) => {
                     }}
                     onChangeDirecao={() => setDirecaoOrdenacao(direcaoOrdenacao === "asc" ? "desc" : "asc")} />
             </FlexLine>
-            <PaginatedGrid isLoading={isBuscandoTurmas} pagedList={turmas} onPageChange={(index) => setPaginaAtual(index)} />
+            <PaginatedGrid isLoading={isBuscandoTurmas}
+                pagedList={turmas}
+                onPageChange={(index) => setPaginaAtual(index)}
+                onEntrarClick={(turma) => {
+                    escolherTurma(turma.id);
+                    history.push(`/algoritmos/${turma.id}`);
+                }}
+                onInscreverClick={(turma) => {
+                    setTurmaSelecionada(turma.id)
+                    success(`Pedido de inscrição feito com sucesso. Por favor, aguarde uma confirmação do prof. ${turma.nomeInstrutor}.`);
+                }} />
         </Container>
     );
 };

@@ -1,4 +1,4 @@
-import { TurmaState, GET_TURMAS_REQUESTED, GET_TURMAS_SUCCEEDED, GET_TURMAS_FAILED, TurmaActionTypes, CHANGE_PAGE, CHANGE_BUSCA, CHANGE_DIRECAO_ORDENACAO, CHANGE_ORDENACAO, CLEAN_TURMA_ERROS } from './types';
+import { TurmaState, GET_TURMAS_REQUESTED, GET_TURMAS_SUCCEEDED, GET_TURMAS_FAILED, TurmaActionTypes, CHANGE_PAGE, CHANGE_BUSCA, CHANGE_DIRECAO_ORDENACAO, CHANGE_ORDENACAO, CLEAN_TURMA_ERROS, CHANGE_TURMA_SELECIONADA } from './types';
 
 const initialState: TurmaState = {
     getTurmasPending: false,
@@ -7,7 +7,8 @@ const initialState: TurmaState = {
     pageNum: 0,
     colunaOrdenacao: 1,
     direcaoOrdenacao: "asc",
-    erros: []
+    erros: [],
+    turmaSelecionada: undefined,
 };
 
 export const turmaReducer = (state = initialState, action: TurmaActionTypes): TurmaState => {
@@ -62,6 +63,11 @@ export const turmaReducer = (state = initialState, action: TurmaActionTypes): Tu
                 ...state,
                 erros: []
             };
+        case CHANGE_TURMA_SELECIONADA:
+            return {
+                ...state,
+                turmaSelecionada: action.payload
+            }
         default:
             return state;
     }

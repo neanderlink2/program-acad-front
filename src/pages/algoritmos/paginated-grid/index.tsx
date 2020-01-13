@@ -1,5 +1,6 @@
 import React, { Fragment, useMemo } from 'react';
 import { Grid, Button, ButtonGroup, Typography } from '@material-ui/core';
+
 import { LoadingItem } from './loading-item';
 import { GridItem } from './grid-item/index';
 import { PagedList } from '../../../models/pagedList';
@@ -7,12 +8,10 @@ import { PagedList } from '../../../models/pagedList';
 type PaginatedGridProps = {
     pagedList?: PagedList<any>,
     isLoading: boolean,
-    onPageChange: (index: number) => void,
-    onEntrarClick: (turma: any) => void,
-    onInscreverClick: (turma: any) => void
+    onPageChange: (index: number) => void
 }
 
-export const PaginatedGrid = ({ pagedList, isLoading = false, onPageChange, onEntrarClick, onInscreverClick }: PaginatedGridProps) => {
+export const PaginatedGrid = ({ pagedList, isLoading = false, onPageChange }: PaginatedGridProps) => {
     const pagination = useMemo(() => {
         if (pagedList) {
             let pagination: any[] = [];
@@ -25,14 +24,6 @@ export const PaginatedGrid = ({ pagedList, isLoading = false, onPageChange, onEn
         }
     }, [pagedList, onPageChange]);
 
-    const onItemClick = (turma: any) => {
-        if (turma.isUsuarioInscrito) {
-            onEntrarClick(turma)
-        } else {
-            onInscreverClick(turma);
-        }
-    }
-
     return (
         <Grid container>
             {
@@ -40,17 +31,15 @@ export const PaginatedGrid = ({ pagedList, isLoading = false, onPageChange, onEn
                     <Fragment><LoadingItem /><LoadingItem /><LoadingItem /></Fragment>
                     :
                     pagedList && pagedList.items.length <= 0 ?
-                        <Typography component="small">Nenhuma turma foi encontrada...</Typography>
+                        <Typography component="small">Nenhum algoritmo foi encontrada...</Typography>
                         :
-                        pagedList && pagedList.items.map((turma) => {
-                            return <GridItem key={turma.id}
-                                image={turma.imagemTurma}
-                                imageAlt={turma.titulo}
-                                instrutor={turma.nomeInstrutor}
-                                isUsuarioInscrito={turma.isUsuarioInscrito}
-                                dataHoraTermino={turma.dataTermino}
-                                title={turma.titulo}
-                                onItemClicked={() => onItemClick(turma)} />
+                        pagedList && pagedList.items.map((algoritmo) => {
+                            return <GridItem key={algoritmo.id}
+                                descricao={algoritmo.htmlDescricao}
+                                linguagensDisponiveis={algoritmo.linguagensDisponiveis}
+                                isConcluido={algoritmo.isResolvido}
+                                nivelDificuldade={algoritmo.nivelDificuldade}
+                                title={algoritmo.titulo} />
                         })
             }
             <Grid item xs={12} style={{ padding: 10, textAlign: 'right' }}>

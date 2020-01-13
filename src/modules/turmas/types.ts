@@ -9,6 +9,7 @@ export const CHANGE_DIRECAO_ORDENACAO = 'turmas/ChangeDirecaoOrdenacao';
 export const CHANGE_BUSCA = 'turmas/ChangeBusca';
 export const CHANGE_PAGE = 'turmas/ChangePage';
 export const CLEAN_TURMA_ERROS = 'turmas/CleanErros';
+export const CHANGE_TURMA_SELECIONADA = 'turmas/ChangeTurmaSelecionada';
 
 //Ordem 1: Nome
 //Ordem 2: DataTermino
@@ -59,6 +60,11 @@ interface CleanErrosAction {
     type: typeof CLEAN_TURMA_ERROS
 }
 
+interface ChooseTurmaSelecionadaAction {
+    type: typeof CHANGE_TURMA_SELECIONADA,
+    payload: string
+}
+
 export type TurmaState = {
     listaTurmas?: PagedList<ListagemTurma>,
     getTurmasPending: boolean,
@@ -66,8 +72,9 @@ export type TurmaState = {
     pageNum?: number,
     colunaOrdenacao?: 1 | 2,
     direcaoOrdenacao?: "asc" | "desc",
-    erros: string[]
+    erros: string[],
+    turmaSelecionada?: string
 }
 
 export type TurmaActionTypes = GetTurmasRequestedAction | GetTurmasSucceededAction | GetTurmasFailedAction | ChangeOrdenacaoAction |
-    ChangeDirecaoOrdenacaoAction | ChangeBuscaAction | ChangePageAction | CleanErrosAction; 
+    ChangeDirecaoOrdenacaoAction | ChangeBuscaAction | ChangePageAction | CleanErrosAction | ChooseTurmaSelecionadaAction; 

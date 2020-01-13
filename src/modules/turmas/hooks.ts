@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../../configs/middlewares';
-import { requisitarTurmas, limparErros as cleanErrors } from './actions';
+import { requisitarTurmas, limparErros as cleanErrors, selecionarTurma } from './actions';
 import { BuscaTurmas } from "./types";
 import { useEffect, useCallback } from 'react';
 
@@ -15,10 +15,11 @@ export const useTurmaState = ({ busca, pageIndex, colunaOrdenacao = 1, direcaoOr
         totalItems,
     })), [dispatch, busca, colunaOrdenacao, direcaoOrdenacao, pageIndex, totalItems]);
     const limparErros = () => dispatch(cleanErrors());
+    const escolherTurma = (idTurma: string) => dispatch(selecionarTurma(idTurma));
 
     useEffect(() => {
         buscarTurmas();
     }, [buscarTurmas])
 
-    return { turmas, erros, isBuscandoTurmas, buscarTurmas, limparErros };
+    return { turmas, erros, isBuscandoTurmas, buscarTurmas, limparErros, escolherTurma };
 }
