@@ -5,6 +5,7 @@ import TurmaScreen from '../pages/turmas/index';
 import PrimeiroAcessoScreen from '../pages/primeiro-acesso';
 import { CadastroScreen } from '../pages/cadastro/index';
 import { AlgoritmosScreen } from '../pages/algoritmos';
+import { AmbienteDevScreen } from '../pages/ambiente-dev';
 
 type RouteModel = {
     path: string,
@@ -48,6 +49,12 @@ export const routes: RouteModel[] = [
         path: '/algoritmos/:id',
         component: AlgoritmosScreen,
         title: 'Algoritmos - Program.Acad',
+        onlyAuthenticated: true
+    },
+    {
+        path: '/ambiente-dev/:idAlgoritmo',
+        component: AmbienteDevScreen,
+        title: 'Ambiente de Desenvolvimento',
         onlyAuthenticated: true
     }
 ];
