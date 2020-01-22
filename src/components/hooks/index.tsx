@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../configs/middlewares';
+import { useLocation } from 'react-router-dom';
 
 export const useDocumentTitle = (title?: string) => {
     useEffect(() => {
@@ -55,4 +56,7 @@ export const useUserData = () => {
         }
     }, [userToken]);
     return { userClaims, user: userToken ? userToken.user : undefined, token, isPrimeiroAcesso };
+}
+export const useQuery = () => {
+    return new URLSearchParams(useLocation().search);
 }

@@ -52,7 +52,7 @@ export const routes: RouteModel[] = [
         onlyAuthenticated: true
     },
     {
-        path: '/ambiente-dev/:idAlgoritmo',
+        path: '/ambiente-dev/:idAlgoritmo/:idTurma',
         component: AmbienteDevScreen,
         title: 'Ambiente de Desenvolvimento',
         onlyAuthenticated: true

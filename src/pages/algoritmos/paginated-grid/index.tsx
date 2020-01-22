@@ -35,6 +35,7 @@ export const PaginatedGrid = ({ pagedList, isLoading = false, onPageChange }: Pa
                         :
                         pagedList && pagedList.items.map((algoritmo) => {
                             return <GridItem key={algoritmo.id}
+                                idAlgoritmo={algoritmo.id}
                                 descricao={algoritmo.htmlDescricao}
                                 linguagensDisponiveis={algoritmo.linguagensDisponiveis}
                                 isConcluido={algoritmo.isResolvido}

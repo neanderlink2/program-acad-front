@@ -4,9 +4,11 @@ import { FlexLine } from '../../../../components/flex-helpers/index';
 import { PlayArrow, Check } from '@material-ui/icons';
 import Truncate from 'react-text-truncate';
 import { LinguagensProgramacaoEnum, LinguagensProgramacao } from '../../../../models/algoritmos';
+import { useHistory, useParams } from 'react-router-dom';
 
 type GridItemProps = {
     title: any,
+    idAlgoritmo: string,
     nivelDificuldade: string,
     isConcluido: boolean,
     descricao: string,
@@ -14,9 +16,10 @@ type GridItemProps = {
     key?: any
 }
 
-export const GridItem = ({ title, linguagensDisponiveis, descricao, nivelDificuldade, isConcluido }: GridItemProps) => {
+export const GridItem = ({ title, idAlgoritmo, linguagensDisponiveis, descricao, nivelDificuldade, isConcluido }: GridItemProps) => {
     const descricaoRaw = removeHtmlTags(descricao);
-
+    const history = useHistory();
+    const { id } = useParams();
     return (
         <Grid item xs={12} sm={6} lg={4} style={{ padding: 5 }}>
             <Card>
@@ -27,7 +30,7 @@ export const GridItem = ({ title, linguagensDisponiveis, descricao, nivelDificul
                         {
                             linguagensDisponiveis.map((linguagem: LinguagensProgramacao) => {
                                 return (
-                                    <Chip label={LinguagensProgramacaoEnum[linguagem]} style={{ margin: 5 }} />
+                                    <Chip variant="outlined" label={LinguagensProgramacaoEnum[linguagem]} style={{ margin: 5 }} />
                                 )
                             })
                         }
@@ -45,7 +48,7 @@ export const GridItem = ({ title, linguagensDisponiveis, descricao, nivelDificul
                             isConcluido ?
                                 <Button fullWidth color="secondary" variant="contained" disabled startIcon={<Check />}> Concluído</Button>
                                 :
-                                <Button fullWidth color="secondary" variant="contained" startIcon={<PlayArrow />}> Começar</Button>
+                                <Button fullWidth color="secondary" variant="contained" startIcon={<PlayArrow />} onClick={() => history.push(`/ambiente-dev/${idAlgoritmo}/${id}`)}> Começar</Button>
                         }
                     </FlexLine>
                 </CardContent>
