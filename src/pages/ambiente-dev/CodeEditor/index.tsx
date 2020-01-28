@@ -29,7 +29,7 @@ export const CodeEditor = ({ code, linguagemSelecionada, onCodeChange }: CodeEdi
             name="ambiente-dev"
             value={code}
             editorProps={{ $blockScrolling: Infinity }}
-            style={{ flex: 1, flexGrow: 1, minWidth: 350, width: '100%', minHeight: 400 }}
+            style={{ flex: 1, flexGrow: 1, minWidth: 350, width: '100%', minHeight: 300 }}
             setOptions={{
                 enableBasicAutocompletion: true,
                 enableLiveAutocompletion: true,

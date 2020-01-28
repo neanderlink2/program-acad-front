@@ -8,7 +8,6 @@ import { DetalhesAlgoritmo } from './DetalhesAlgoritmo';
 import { CodeEditor } from './CodeEditor';
 import { EntradaSaida } from './EntradaSaida';
 
-
 export const AmbienteDevScreen = () => {
     const { isBuscandoAlgoritmoPorId, algoritmo, erros, limparErros } = useAlgoritmoPorIdState();
     const { warning } = useSnackbars();
@@ -48,6 +47,8 @@ export const AmbienteDevScreen = () => {
         }
     }, [linguagemSelecionada])
 
+
+
     return (
         <FullScreenContainer>
             {
@@ -68,6 +69,8 @@ export const AmbienteDevScreen = () => {
                                 onCodeChange={(code) => setCode(code)} />
 
                             <EntradaSaida entradas={listaEntradas}
+                                codigo={code}
+                                linguagemSelecionada={linguagemSelecionada}
                                 adicionarEntrada={adicionarEntrada}
                                 removerEntrada={removerEntrada} />
                         </AmbienteDesenvolvimentoContainer>

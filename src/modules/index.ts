@@ -10,15 +10,18 @@ import { algoritmoReducer } from './algoritmos/reducer';
 import { accountSaga } from './account/sagas';
 import { turmaSaga } from './turmas/sagas';
 import { algoritmoSaga } from './algoritmos/sagas';
+import { ambienteDevReducer } from './ambiente-dev/reducer';
+import { ambienteDevSaga } from './ambiente-dev/sagas';
 
 export const rootReducer = (history: any) => combineReducers({
     router: connectRouter(history),
     login: loginReducer,
     account: accountReducer,
     turma: turmaReducer,
-    algoritmo: algoritmoReducer
+    algoritmo: algoritmoReducer,
+    ambienteDev: ambienteDevReducer
 });
 
 export const rootSaga = function* () {
-    return yield all([accountSaga, turmaSaga, algoritmoSaga]);
+    return yield all([accountSaga, turmaSaga, algoritmoSaga, ambienteDevSaga]);
 }

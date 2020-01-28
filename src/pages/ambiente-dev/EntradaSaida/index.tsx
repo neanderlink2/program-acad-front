@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 import { InferiorContainer, InferiorSection, SectionTitle } from './styles';
-import { TextField, InputAdornment, Tooltip, IconButton, Chip, Button, Icon } from '@material-ui/core';
+import { TextField, InputAdornment, Tooltip, IconButton, Chip, Button, Icon, CircularProgress } from '@material-ui/core';
 import { InlineChips } from '../styles';
 import { Close, PlayArrow } from '@material-ui/icons';
 import AceEditor from "react-ace";
 
 import "ace-builds/src-noconflict/mode-text";
 import "ace-builds/src-noconflict/theme-terminal";
+import { useAmbienteDevState } from '../../../modules/ambiente-dev/hooks';
+import { LinguagensProgramacao } from '../../../models/algoritmos';
 
 type EntradaSaidaType = {
     entradas: string[],
+    codigo: string,
+    linguagemSelecionada?: LinguagensProgramacao,
     adicionarEntrada: (entrada: string) => void,
     removerEntrada: (entrada: string) => void
 }
 
-export const EntradaSaida = ({ entradas, adicionarEntrada, removerEntrada }: EntradaSaidaType) => {
+export const EntradaSaida = ({ entradas, linguagemSelecionada, codigo, adicionarEntrada, removerEntrada }: EntradaSaidaType) => {
     const [entradaDigitada, setEntradaDigitada] = useState('');
+    const { isCompiling, compileResult, erros, compilar } = useAmbienteDevState(linguagemSelecionada);
 
     return (
         <InferiorContainer>
@@ -66,7 +71,10 @@ export const EntradaSaida = ({ entradas, adicionarEntrada, removerEntrada }: Ent
             <InferiorSection>
                 <SectionTitle>
                     Saída
-                    <Button size="small" startIcon={<PlayArrow />} variant="contained" color="secondary">Executar</Button>
+                    <Button size="small" startIcon={isCompiling ? <CircularProgress size={15} /> : <PlayArrow />}
+                        disabled={isCompiling}
+                        onClick={() => compilar(codigo, entradas)}
+                        variant="contained" color="secondary">{isCompiling ? 'Executando...' : 'Executar'}</Button>
                 </SectionTitle>
                 <AceEditor
                     mode="text"
@@ -75,8 +83,9 @@ export const EntradaSaida = ({ entradas, adicionarEntrada, removerEntrada }: Ent
                     name="saida"
                     //height="100%"
                     highlightActiveLine={false}
+                    value={compileResult ? compileResult.output : ''}
                     editorProps={{ $blockScrolling: Infinity }}
-                    style={{ flex: 1, flexGrow: 1, width: '100%', height: '80%' }}
+                    style={{ flex: 1, flexGrow: 1, width: '100%', height: '80%', color: compileResult && compileResult.hasCompilingError ? 'red' : 'inherit' }}
                     setOptions={{
                         showLineNumbers: false,
                         showGutter: false,

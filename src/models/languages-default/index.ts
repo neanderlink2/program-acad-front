@@ -1,4 +1,5 @@
-export const csharpDefault = `public class Program 
+export const csharpDefault = `using System;
+public class Program 
 {
     public static void Main(string[] args) 
     {
@@ -14,6 +15,12 @@ export const javaDefault = `public class Main
     }
 }`;
 
-export const pythonDefault = `printf('Olá mundo')`;
+export const pythonDefault = `print('Olá mundo')`;
 
-export const javascriptDefault = `console.log("Olá mundo")`;
+export const javascriptDefault = `//Saída
+console.log("Olá mundo")
+//Entrada
+const stdin = process.openStdin();
+stdin.addListener("data", function(input) {
+    console.log(\`Entrada Teste: \${input}\`);
+  });`;
