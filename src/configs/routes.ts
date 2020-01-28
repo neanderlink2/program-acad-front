@@ -1,5 +1,5 @@
-import React from 'react';
-import HomeScreen from '../pages/home'
+import React, { ComponentType, ElementType } from 'react';
+import { HomeScreen } from '../pages/home'
 import LoginScreen from '../pages/login';
 import TurmaScreen from '../pages/turmas/index';
 import PrimeiroAcessoScreen from '../pages/primeiro-acesso';
@@ -9,11 +9,10 @@ import { AmbienteDevScreen } from '../pages/ambiente-dev';
 
 type RouteModel = {
     path: string,
-    component: React.ReactNode,
+    component?: ElementType,
     title: string,
     onlyAuthenticated: boolean
 }
-
 export const routes: RouteModel[] = [
     {
         path: '/',

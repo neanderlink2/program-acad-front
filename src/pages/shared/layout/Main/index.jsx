@@ -7,7 +7,7 @@ import { useUserData } from '../../../../components/hooks';
 const Main = () => {
     const { user } = useUserData();
     return (
-        <main>
+        <main style={{ marginTop: 50 }}>
             {routes.map((route) => {
                 if (!route.onlyAuthenticated || (route.onlyAuthenticated && user)) {
                     return (

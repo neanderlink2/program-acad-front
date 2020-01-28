@@ -12,6 +12,7 @@ import { turmaSaga } from './turmas/sagas';
 import { algoritmoSaga } from './algoritmos/sagas';
 import { ambienteDevReducer } from './ambiente-dev/reducer';
 import { ambienteDevSaga } from './ambiente-dev/sagas';
+import { asideMenuReducer } from './aside-menu/index';
 
 export const rootReducer = (history: any) => combineReducers({
     router: connectRouter(history),
@@ -19,7 +20,8 @@ export const rootReducer = (history: any) => combineReducers({
     account: accountReducer,
     turma: turmaReducer,
     algoritmo: algoritmoReducer,
-    ambienteDev: ambienteDevReducer
+    ambienteDev: ambienteDevReducer,
+    asideMenu: asideMenuReducer
 });
 
 export const rootSaga = function* () {

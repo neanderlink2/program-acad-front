@@ -8,7 +8,7 @@ export const Section = ({ children, align = "left", title, startImage, endImage 
     return (
         <CenterSection>
             {startImage}
-            <Container style={{ textAlign: align }}>
+            <Container style={{ textAlign: align, display: 'flex', flexDirection: 'column', flex: 1 }}>
                 <SectionTitle variant="h4" align={align}>{title}</SectionTitle>
                 {children}
             </Container>

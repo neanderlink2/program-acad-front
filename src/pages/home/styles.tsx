@@ -12,9 +12,13 @@ export const CenterSection = styled(Container)({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
+    flexWrap: 'wrap',
     alignItems: 'center',
     paddingTop: 75,
-    paddingBottom: 75
+    paddingBottom: 75,
+    '@media(max-width: 650px)': {
+        textAlign: 'center'
+    }
 })
 
 export const SectionTitle = styled(Typography)`
@@ -33,6 +37,7 @@ export const SectionText = styled(Typography)({
 const useStyles = makeStyles({
     image: {
         maxWidth: '300px',
+        width: '100%',
         filter: 'brightness(0.4)'
     }
 });

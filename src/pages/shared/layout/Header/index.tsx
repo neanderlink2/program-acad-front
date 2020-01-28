@@ -6,24 +6,32 @@ import { bindTrigger, bindMenu, usePopupState } from 'material-ui-popup-state/ho
 import { useHistory } from 'react-router-dom';
 import { useUserData } from '../../../../components/hooks/index';
 import { signOut } from '../../../../configs/firebaseConfig';
-
+import { useWindowWidth } from './hooks';
+import { useAsideMenu } from '../../../../modules/aside-menu/hooks';
 
 const Header = () => {
     const history = useHistory();
     const { user } = useUserData();
-
+    const width = useWindowWidth();
+    const { showMenu } = useAsideMenu();
     return (
-        <AppBar position="static">
+        <AppBar>
             <Toolbar>
-                <IconButton edge="start" color="inherit" aria-label="menu">
-                    <MenuIcon />
-                </IconButton>
+                {
+                    width <= 650 &&
+                    <IconButton edge="start" color="inherit" aria-label="menu" onClick={showMenu}>
+                        <MenuIcon />
+                    </IconButton>
+                }
                 <TituloTopo variant="h6" onClick={() => history.push('/')}>Program.Acad</TituloTopo>
                 {
-                    user ?
-                        <AuthenticatedMenu userName={user.displayName} signOut={() => signOut() as Promise<void | Error>} />
+                    width > 650 ?
+                        user ?
+                            <AuthenticatedMenu userName={user.displayName} signOut={() => signOut() as Promise<void | Error>} />
+                            :
+                            <NonAuthenticatedMenu />
                         :
-                        <NonAuthenticatedMenu />
+                        null
                 }
             </Toolbar>
         </AppBar>

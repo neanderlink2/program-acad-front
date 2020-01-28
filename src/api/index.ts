@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import store from '../configs/middlewares';
+import { signOut } from '../configs/firebaseConfig';
 
 const api = axios.create({
     baseURL: process.env.NODE_ENV === 'production' ?
@@ -45,6 +46,7 @@ export const formatErrors = (error: AxiosError<ApiError[]>): string[] => {
             case 400:
                 return error.response.data.map((e: ApiError) => e.detail);
             case 401:
+                signOut();
                 return ["Não autorizado"];
             case 404:
                 return ["Nenhum dado foi encontrado"];

@@ -8,24 +8,24 @@ export interface HomeScreenProps {
     title?: string
 }
 
-const HomeScreen = ({ title }: HomeScreenProps) => {
+export const HomeScreen = ({ title }: HomeScreenProps) : React.ReactElement => {
     useDocumentTitle(title);
 
     return (
         <Fragment>
             <WhiteSection>
                 <CenterSection>
-                    <Typography variant="h3" color="primary">A sua plataforma de desenvolvimento de algoritmos na Web</Typography>
-                    <LogoProgramAcad />
+                    <Typography variant="h3" color="primary" style={{ display: 'flex', flex: 1 }}>A sua plataforma de desenvolvimento de algoritmos na Web</Typography>
+                    <LogoProgramAcad style={{ display: 'flex', flex: 1 }} />
                 </CenterSection>
             </WhiteSection>
 
-            <Section title="O que é a Program.Acad?" endImage={<LogoProgramAcad />}>
+            <Section title="O que é a Program.Acad?" endImage={<LogoProgramAcad style={{ display: 'flex', flex: 1 }} />}>
                 <SectionText>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in commodo mi, et condimentum lorem. Vivamus in justo sed odio placerat feugiat.</SectionText>
                 <SectionText>Proin fringilla in tellus a consectetur. Proin quis purus gravida, mollis eros at, imperdiet nunc. Aliquam massa est, tempor in mi ut, posuere luctus elit.</SectionText>
             </Section>
 
-            <Section title="Como funciona?" align="right" startImage={<LogoProgramAcad />}>
+            <Section title="Como funciona?" align="right" startImage={<LogoProgramAcad style={{ display: 'flex', flex: 1 }} />}>
                 <SectionText>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in commodo mi, et condimentum lorem. Vivamus in justo sed odio placerat feugiat.</SectionText>
                 <SectionText>Proin fringilla in tellus a consectetur. Proin quis purus gravida, mollis eros at, imperdiet nunc. Aliquam massa est, tempor in mi ut, posuere luctus elit.</SectionText>
             </Section>
@@ -38,5 +38,3 @@ const HomeScreen = ({ title }: HomeScreenProps) => {
         </Fragment>
     );
 }
-
-export default HomeScreen;

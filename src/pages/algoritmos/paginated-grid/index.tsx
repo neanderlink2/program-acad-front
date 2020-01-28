@@ -4,9 +4,10 @@ import { Grid, Button, ButtonGroup, Typography } from '@material-ui/core';
 import { LoadingItem } from './loading-item';
 import { GridItem } from './grid-item/index';
 import { PagedList } from '../../../models/pagedList';
+import { NiveisDificuldadeEnum, ListagemAlgoritmo } from '../../../models/algoritmos';
 
 type PaginatedGridProps = {
-    pagedList?: PagedList<any>,
+    pagedList?: PagedList<ListagemAlgoritmo>,
     isLoading: boolean,
     onPageChange: (index: number) => void
 }
@@ -39,7 +40,7 @@ export const PaginatedGrid = ({ pagedList, isLoading = false, onPageChange }: Pa
                                 descricao={algoritmo.htmlDescricao}
                                 linguagensDisponiveis={algoritmo.linguagensDisponiveis}
                                 isConcluido={algoritmo.isResolvido}
-                                nivelDificuldade={algoritmo.nivelDificuldade}
+                                nivelDificuldade={NiveisDificuldadeEnum[algoritmo.idNivelDificuldade]}
                                 title={algoritmo.titulo} />
                         })
             }

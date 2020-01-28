@@ -43,14 +43,14 @@ export const useUserData = () => {
     useEffect(() => {
         if (userToken) {
             userToken.user.getIdTokenResult(true)
-                .then((result) => {
+                .then((result) => {                    
                     setUserClaims(result.claims);
                     setToken(result.token);
                     setIsPrimeiroAcesso(!Boolean(result.claims.nickname));
                 });
         }
         return () => {
-            setUserClaims(null);
+           //setUserClaims(null);
             setToken('');
             setIsPrimeiroAcesso(null);
         }

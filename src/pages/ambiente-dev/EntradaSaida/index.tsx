@@ -71,10 +71,15 @@ export const EntradaSaida = ({ entradas, linguagemSelecionada, codigo, adicionar
             <InferiorSection>
                 <SectionTitle>
                     Saída
-                    <Button size="small" startIcon={isCompiling ? <CircularProgress size={15} /> : <PlayArrow />}
-                        disabled={isCompiling}
-                        onClick={() => compilar(codigo, entradas)}
-                        variant="contained" color="secondary">{isCompiling ? 'Executando...' : 'Executar'}</Button>
+                    <div>
+                        <small >{compileResult ? `Tempo de CPU: ${compileResult.cpuTime}` : ''}</small>
+                        <Button size="small" startIcon={isCompiling ? <CircularProgress size={15} /> : <PlayArrow />}
+                            disabled={isCompiling}
+                            style={{ marginLeft: 5 }}
+                            onClick={() => compilar(codigo, entradas)}
+                            variant="contained" color="secondary">{isCompiling ? 'Executando...' : 'Executar'}</Button>
+                    </div>
+
                 </SectionTitle>
                 <AceEditor
                     mode="text"

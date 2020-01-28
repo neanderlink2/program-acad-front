@@ -8,7 +8,7 @@ export type ListagemAlgoritmo = {
     htmlDescricao: string,
     idNivelDificuldade: 1 | 2 | 3 | 4 | 5,
     linguagensDisponiveis: LinguagensProgramacao[],
-    isResolvido: string,
+    isResolvido: boolean,
     dataCriacao: string,
     pontosNessaTurma: number
 };

@@ -21,6 +21,14 @@ export const DescricaoAlgoritmoContainer = styled.section`
     color: #b4b4b4;
 `;
 
+export const BotaoSubmeterContainer = styled.section`
+    display: flex; 
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+`
+
 export const TogglableChip = ({ checked, language, onClick, ...props }: { checked: boolean, language: LinguagensProgramacao, onClick: () => void }) => {
     return (
         <Chip {...props} variant={checked ? "default" : "outlined"} onClick={onClick} label={LinguagensProgramacaoEnum[language]} style={{ margin: 5 }} />

@@ -7,6 +7,7 @@ import { NiveisDificuldadeEnum, languageDefaults, LinguagensProgramacao } from '
 import { DetalhesAlgoritmo } from './DetalhesAlgoritmo';
 import { CodeEditor } from './CodeEditor';
 import { EntradaSaida } from './EntradaSaida';
+import { ModalTestes } from './ModalTestes/index';
 
 export const AmbienteDevScreen = () => {
     const { isBuscandoAlgoritmoPorId, algoritmo, erros, limparErros } = useAlgoritmoPorIdState();
@@ -60,6 +61,7 @@ export const AmbienteDevScreen = () => {
                             nivelDificuldade={algoritmo ? NiveisDificuldadeEnum[algoritmo.idNivelDificuldade] : ''}
                             descricao={algoritmo ? algoritmo.htmlDescricao : ''}
                             linguagemSelecionada={linguagemSelecionada}
+                            codigo={code}
                             onLinguagemClicked={(linguagem: LinguagensProgramacao) => setLinguagemSelecionada(linguagem)}
                             linguagensDisponiveis={algoritmo ? algoritmo.linguagensDisponiveis : []} />
 
@@ -74,8 +76,10 @@ export const AmbienteDevScreen = () => {
                                 adicionarEntrada={adicionarEntrada}
                                 removerEntrada={removerEntrada} />
                         </AmbienteDesenvolvimentoContainer>
+                        <ModalTestes />
                     </>
             }
+
         </FullScreenContainer >
     );
 }
