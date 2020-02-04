@@ -26,7 +26,8 @@ firebaseAppAuth.onAuthStateChanged(
     (user) => {
         if (user) {
             user.getIdTokenResult()
-                .then(result => {                    
+                .then(result => {
+                    console.log(result.claims);
                     store.dispatch(storeUser({ user: user, token: result.token }))
                 })
         }

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useHistoricoAlgoritmos } from '../../modules/detalhes-usuario/hooks';
 import { useUserData } from '../../components/hooks/index';
-import { Container, Grid, Card, CardMedia, CardContent, Typography, Chip, CircularProgress, IconButton } from '@material-ui/core';
+import { Container, Grid, Card, CardMedia, CardContent, Typography, Chip, CircularProgress, IconButton, Button, Fab } from '@material-ui/core';
 import { InlineText, SpacedBetweenPanel, CardDadosUsuario, CenterPanel } from './styles';
-import { CalendarToday, Room, Mail, Accessibility, Refresh } from '@material-ui/icons';
+import { CalendarToday, Room, Mail, Accessibility, Refresh, Edit } from '@material-ui/icons';
 import { LinguagensProgramacaoEnum } from '../../models/algoritmos';
 
 export const ContaScreen = () => {
@@ -26,13 +26,19 @@ export const ContaScreen = () => {
                 <Grid item xs={6} sm={8} md={10} style={{ paddingLeft: 5 }}>
                     <Card>
                         <CardDadosUsuario>
-                            <Typography variant="h4">{user?.displayName ?? ""} <small>({userClaims?.nickname ?? ""})</small></Typography>
+
+                            <Typography variant="h4">{user?.displayName ?? ""} <small>({userClaims?.nickname ?? ""})</small>
+                                <Fab color="secondary" style={{ float: 'right' }}>
+                                    <Edit />
+                                </Fab>
+                            </Typography>
                             <SpacedBetweenPanel>
                                 <InlineText><CalendarToday style={{ marginRight: 10 }} /> 00/00/0000</InlineText>
                                 <InlineText><Room style={{ marginRight: 10 }} /> 00.000-000</InlineText>
                                 <InlineText><Mail style={{ marginRight: 10 }} /> email.usuario@email.com</InlineText>
                                 <InlineText><Accessibility style={{ marginRight: 10 }} /> Masculino</InlineText>
                             </SpacedBetweenPanel>
+
                         </CardDadosUsuario>
                     </Card>
                 </Grid>

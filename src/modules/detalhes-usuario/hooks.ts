@@ -1,7 +1,8 @@
 import { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../configs/middlewares';
-import { requisitarHistoricoAlgoritmos } from './actions';
+import { requisitarHistoricoAlgoritmos, requisitarAtualizacaoDados } from './actions';
+import { UpdateDadosPayload } from './types';
 
 export const useHistoricoAlgoritmos = () => {
     const dispatch = useDispatch();
@@ -23,4 +24,18 @@ export const useHistoricoAlgoritmos = () => {
     }, [buscarHistorico])
 
     return { data: historico, isLoading: isLoading && !hasFinished, buscarHistorico };
+}
+
+export const useAtualizacaoDados = () => {
+    const dispatch = useDispatch();
+    const { isLoading, hasFinished, errors } = useSelector((states: RootState) => ({
+        isLoading: states.detalhesUsuario.requests?.updateDados?.isRequesting,
+        hasFinished: states.detalhesUsuario.requests?.updateDados?.hasFinished,
+        errors: states.detalhesUsuario.requests?.updateDados?.errorPayload,
+    }));
+    const atualizarDados = useCallback((dados: UpdateDadosPayload) => {
+        dispatch(requisitarAtualizacaoDados(dados));
+    }, [dispatch]);
+
+    return { isLoading: isLoading && !hasFinished, hasErrors: errors.length > 0, errors, atualizarDados };
 }

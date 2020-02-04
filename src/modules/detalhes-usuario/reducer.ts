@@ -1,8 +1,13 @@
-import { DetalhesUsuarioActionTypes, DetalhesUsuarioState, GET_HISTORICO_ALGORITMOS_REQUESTED, GET_HISTORICO_ALGORITMOS_SUCCEEDED, GET_HISTORICO_ALGORITMOS_FAILED } from './types';
+import { DetalhesUsuarioActionTypes, DetalhesUsuarioState, GET_HISTORICO_ALGORITMOS_REQUESTED, GET_HISTORICO_ALGORITMOS_SUCCEEDED, GET_HISTORICO_ALGORITMOS_FAILED, UPDATE_DADOS_REQUESTED, UPDATE_DADOS_SUCCEEDED, UPDATE_DADOS_FAILED } from './types';
 const initialState: DetalhesUsuarioState = {
     historicoUsuario: [],
     requests: {
         getHistorico: {
+            isRequesting: false,
+            hasFinished: false,
+            errorPayload: []
+        },
+        updateDados: {
             isRequesting: false,
             hasFinished: false,
             errorPayload: []
@@ -43,6 +48,42 @@ export const detalhesUsuarioReducer = (state = initialState, action: DetalhesUsu
                 requests: {
                     ...state.requests,
                     getHistorico: {
+                        isRequesting: false,
+                        hasFinished: true,
+                        errorPayload: action.payload
+                    }
+                }
+            };
+        case UPDATE_DADOS_REQUESTED:
+            return {
+                ...state,
+                requests: {
+                    ...state.requests,
+                    updateDados: {
+                        isRequesting: true,
+                        hasFinished: false,
+                        errorPayload: []
+                    }
+                }
+            };
+        case UPDATE_DADOS_SUCCEEDED:
+            return {
+                ...state,
+                requests: {
+                    ...state.requests,
+                    updateDados: {
+                        isRequesting: false,
+                        hasFinished: true,
+                        errorPayload: []
+                    }
+                }
+            };
+        case UPDATE_DADOS_FAILED:
+            return {
+                ...state,
+                requests: {
+                    ...state.requests,
+                    updateDados: {
                         isRequesting: false,
                         hasFinished: true,
                         errorPayload: action.payload

@@ -6,8 +6,8 @@ const api = axios.create({
     baseURL: process.env.NODE_ENV === 'production' ?
         'https://programacadapipresentation20200109114653.azurewebsites.net/api'
         :
-        'https://programacadapipresentation20200109114653.azurewebsites.net/api'
-        //'http://localhost:55965/api',
+        //'https://programacadapipresentation20200109114653.azurewebsites.net/api'
+        'http://localhost:63857/api',
 });
 
 api.interceptors.request.use(async config => {
@@ -29,7 +29,7 @@ export const postRequest = async (url: string, body?: any, params?: any) => {
 }
 
 export const putRequest = async (url: string, body?: any, params?: any) => {
-    return api.put(url, { params });
+    return api.put(url, body, { params });
 }
 
 export const deleteRequest = async (url: string, params?: any) => {

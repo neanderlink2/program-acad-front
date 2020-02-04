@@ -7,6 +7,7 @@ import { CadastroScreen } from '../pages/cadastro/index';
 import { AlgoritmosScreen } from '../pages/algoritmos';
 import { AmbienteDevScreen } from '../pages/ambiente-dev';
 import { ContaScreen } from '../pages/conta';
+import { EdicaoContaScreen } from '../pages/edicao-conta/index';
 
 type RouteModel = {
     path: string,
@@ -61,6 +62,12 @@ export const routes: RouteModel[] = [
         path: '/ambiente-dev/:idAlgoritmo/:idTurma',
         component: AmbienteDevScreen,
         title: 'Ambiente de Desenvolvimento',
+        onlyAuthenticated: true
+    },
+    {
+        path: '/conta/edicao',
+        component: EdicaoContaScreen,
+        title: 'Edição do perfil - Program.Acad',
         onlyAuthenticated: true
     }
 ];
