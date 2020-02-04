@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { AppBar, Toolbar, IconButton, Menu, MenuItem } from '@material-ui/core';
-import { Menu as MenuIcon, AccountCircle } from '@material-ui/icons';
+import { Menu as MenuIcon, AccountCircle, Assignment, People, ExitToApp } from '@material-ui/icons';
 import { BotaoTopo, TituloTopo } from './styles';
 import { bindTrigger, bindMenu, usePopupState } from 'material-ui-popup-state/hooks';
 import { useHistory } from 'react-router-dom';
@@ -52,16 +52,21 @@ const AuthenticatedMenu = ({ userName, signOut }: { userName: string | null, sig
 
     return (
         <Fragment>
-            <BotaoTopo variant="text" startIcon={<AccountCircle />} {...bindTrigger(popupState)}>{userName}</BotaoTopo>
-            <Menu {...bindMenu(popupState)}>
-                <MenuItem onClick={popupState.close}>Minha conta</MenuItem>
+            <BotaoTopo variant="text" startIcon={<People />} onClick={() => history.push("/turmas")}>Turmas</BotaoTopo>
+            <BotaoTopo variant="text" startIcon={<AccountCircle />} onClick={() => history.push("/conta")}>{userName}</BotaoTopo>
+            <BotaoTopo variant="text" startIcon={<ExitToApp />} onClick={deslogar}>Sair</BotaoTopo>
+            {/*<Menu {...bindMenu(popupState)}>
+                <MenuItem onClick={() => {
+                    popupState.close();
+                    history.push("/conta");
+                }}>Minha conta</MenuItem>
                 <MenuItem onClick={() => {
                     popupState.close();
                     history.push("/turmas");
                 }}>Turmas inscritas</MenuItem>
                 <MenuItem onClick={deslogar}>Sair</MenuItem>
-            </Menu>
-        </Fragment >
+            </Menu>*/}
+        </Fragment>
     )
 }
 

@@ -5,6 +5,7 @@ import { styled, makeStyles } from '@material-ui/core/styles';
 export const SpacedBox = styled(Container)({
     display: 'flex',
     flexGrow: 1,
+    flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

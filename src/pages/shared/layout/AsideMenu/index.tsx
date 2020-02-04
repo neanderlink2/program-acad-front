@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SwipeableDrawer, List, ListItem, ListItemIcon, ListItemText, Divider, Button } from '@material-ui/core';
-import { ArrowBack, Person, Assignment } from '@material-ui/icons';
+import { ArrowBack, Person, Assignment, People, AccountCircle } from '@material-ui/icons';
 import { useAsideMenu } from '../../../../modules/aside-menu/hooks';
 import { TopAsideMenu } from './styles';
 import { signOut } from '../../../../configs/firebaseConfig'
@@ -21,7 +21,6 @@ export const AsideMenu = () => {
         }
     }, [userClaims]);
 
-    console.log(userClaims);
     const imageStyle = userClaims && userClaims.picture ? { backgroundImage: `url(${userClaims.picture}) ` } : { backgroundColor: '#d2d2d2' };
     return (
         <SwipeableDrawer
@@ -54,12 +53,18 @@ export const AsideMenu = () => {
                         <section style={{ flex: 1 }}>
                             <List>
                                 <ListItem disabled>Minhas informações</ListItem>
-                                <ListItem button>
-                                    <ListItemIcon><Person /></ListItemIcon>
+                                <ListItem button onClick={() => {
+                                    history.push("/conta");
+                                    hideMenu();
+                                }}>
+                                    <ListItemIcon><AccountCircle /></ListItemIcon>
                                     <ListItemText primary="Conta" />
                                 </ListItem>
-                                <ListItem button>
-                                    <ListItemIcon><Assignment /></ListItemIcon>
+                                <ListItem button onClick={() => {
+                                    history.push("/turmas");
+                                    hideMenu();
+                                }}>
+                                    <ListItemIcon><People /></ListItemIcon>
                                     <ListItemText primary="Turmas inscritas" />
                                 </ListItem>
                             </List>
