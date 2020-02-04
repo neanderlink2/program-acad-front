@@ -6,7 +6,7 @@ import { LoadingScreen } from '../../components/loading/index';
 import { FlexLine } from '../../components/flex-helpers/index';
 import { OrdenacaoSelect } from './ordenacao-select';
 import { PaginatedGrid } from './paginated-grid/index';
-import { useTurmaState } from '../../modules/turmas/hooks';
+import { useTurmaState, useSolicitacaoAcesso } from '../../modules/turmas/hooks';
 
 const TurmaScreen = ({ title }: { title: string }) => {
     useDocumentTitle(title);
@@ -20,14 +20,16 @@ const TurmaScreen = ({ title }: { title: string }) => {
     const [turmaSelecionada, setTurmaSelecionada] = useState('');
 
     const history = useHistory();
-    const { success } = useSnackbars();
+    const { success, warning } = useSnackbars();
 
-    const { turmas, isBuscandoTurmas, escolherTurma } = useTurmaState({
+    const { turmas, isBuscandoTurmas, escolherTurma, erros, limparErros } = useTurmaState({
         busca,
         pageIndex: paginaAtual,
         colunaOrdenacao: ordenacao,
         direcaoOrdenacao: direcaoOrdenacao
     });
+
+    const { isSolicitandoAcesso, mensagemSucesso, solicitarAcesso } = useSolicitacaoAcesso();
 
     useEffect(() => {
         if (turmas && turmas.pageIndex > turmas.totalPages - 1) {
@@ -40,6 +42,20 @@ const TurmaScreen = ({ title }: { title: string }) => {
             setUserName(user.displayName);
         }
     }, [user]);
+
+    useEffect(() => {
+        if (!isSolicitandoAcesso && mensagemSucesso && erros.length <= 0) {
+            success(mensagemSucesso);
+            limparErros();
+        }
+
+        if (erros && erros.length > 0) {
+            for (let erro of erros) {
+                warning(erro);
+            }
+            limparErros();
+        }
+    }, [erros, warning, limparErros]);
 
     if (isPrimeiroAcesso === null) {
         return (<LoadingScreen style={{ margin: 15 }} />);
@@ -80,8 +96,9 @@ const TurmaScreen = ({ title }: { title: string }) => {
                     history.push(`/algoritmos/${turma.id}`);
                 }}
                 onInscreverClick={(turma) => {
-                    setTurmaSelecionada(turma.id)
-                    success(`Pedido de inscrição feito com sucesso. Por favor, aguarde uma confirmação do prof. ${turma.nomeInstrutor}.`);
+                    //setTurmaSelecionada(turma.id);
+                    solicitarAcesso(turma.id as string);
+                    //success(`Pedido de inscrição feito com sucesso. Por favor, aguarde uma confirmação do prof. ${turma.nomeInstrutor}.`);
                 }} />
         </Container>
     );

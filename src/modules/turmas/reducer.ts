@@ -1,12 +1,14 @@
-import { TurmaState, GET_TURMAS_REQUESTED, GET_TURMAS_SUCCEEDED, GET_TURMAS_FAILED, TurmaActionTypes, CHANGE_PAGE, CHANGE_BUSCA, CHANGE_DIRECAO_ORDENACAO, CHANGE_ORDENACAO, CLEAN_TURMA_ERROS, CHANGE_TURMA_SELECIONADA } from './types';
+import { TurmaState, GET_TURMAS_REQUESTED, GET_TURMAS_SUCCEEDED, GET_TURMAS_FAILED, TurmaActionTypes, CHANGE_PAGE, CHANGE_BUSCA, CHANGE_DIRECAO_ORDENACAO, CHANGE_ORDENACAO, CLEAN_TURMA_ERROS, CHANGE_TURMA_SELECIONADA, SOLICITAR_ACESSO_REQUESTED, SOLICITAR_ACESSO_SUCCEEDED, SOLICITAR_ACESSO_FAILED } from './types';
 
 const initialState: TurmaState = {
     getTurmasPending: false,
+    getSolicitacaoRequestPending: false,
     listaTurmas: undefined,
     search: '',
     pageNum: 0,
     colunaOrdenacao: 1,
     direcaoOrdenacao: "asc",
+    mensagemSucessoSolicitacao: '',
     erros: [],
     turmaSelecionada: undefined,
 };
@@ -61,13 +63,31 @@ export const turmaReducer = (state = initialState, action: TurmaActionTypes): Tu
         case CLEAN_TURMA_ERROS:
             return {
                 ...state,
+                mensagemSucessoSolicitacao: '',
                 erros: []
             };
         case CHANGE_TURMA_SELECIONADA:
             return {
                 ...state,
                 turmaSelecionada: action.payload
-            }
+            };
+        case SOLICITAR_ACESSO_REQUESTED:
+            return {
+                ...state,
+                getSolicitacaoRequestPending: true
+            };
+        case SOLICITAR_ACESSO_SUCCEEDED:
+            return {
+                ...state,
+                getSolicitacaoRequestPending: false,
+                mensagemSucessoSolicitacao: action.payload
+            };
+        case SOLICITAR_ACESSO_FAILED:
+            return {
+                ...state,
+                getSolicitacaoRequestPending: false,
+                erros: action.payload
+            };
         default:
             return state;
     }

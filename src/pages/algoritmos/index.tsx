@@ -34,7 +34,7 @@ export const AlgoritmosScreen = () => {
             <Typography variant="h5" style={{ marginTop: 15, fontWeight: 'normal' }}>{userName}, você possui {algoritmos ? algoritmos.items[0].pontosNessaTurma : ''} pontos nesta turma.</Typography>
             <FlexLine style={{ justifyContent: 'space-between' }}>
                 <TextField
-                    label="Buscar turmas"
+                    label="Buscar algoritmo"
                     variant="outlined"
                     margin="normal"
                     type="search"

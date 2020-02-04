@@ -10,6 +10,9 @@ export const CHANGE_BUSCA = 'turmas/ChangeBusca';
 export const CHANGE_PAGE = 'turmas/ChangePage';
 export const CLEAN_TURMA_ERROS = 'turmas/CleanErros';
 export const CHANGE_TURMA_SELECIONADA = 'turmas/ChangeTurmaSelecionada';
+export const SOLICITAR_ACESSO_REQUESTED = 'turmas/SolicitarAcessoRequested';
+export const SOLICITAR_ACESSO_SUCCEEDED = 'turmas/SolicitarAcessoSucceeded';
+export const SOLICITAR_ACESSO_FAILED = 'turmas/SolicitarAcessoFailed';
 
 //Ordem 1: Nome
 //Ordem 2: DataTermino
@@ -56,6 +59,21 @@ interface ChangePageAction {
     payload: number
 }
 
+export interface SolicitarAcessoRequestedAction {
+    type: typeof SOLICITAR_ACESSO_REQUESTED,
+    payload: string
+}
+
+interface SolicitarAcessoSucceededAction {
+    type: typeof SOLICITAR_ACESSO_SUCCEEDED,
+    payload: string
+}
+
+interface SolicitarAcessoFailedAction {
+    type: typeof SOLICITAR_ACESSO_FAILED,
+    payload: string[]
+}
+
 interface CleanErrosAction {
     type: typeof CLEAN_TURMA_ERROS
 }
@@ -68,6 +86,8 @@ interface ChooseTurmaSelecionadaAction {
 export type TurmaState = {
     listaTurmas?: PagedList<ListagemTurma>,
     getTurmasPending: boolean,
+    getSolicitacaoRequestPending: boolean,
+    mensagemSucessoSolicitacao?: string,
     search?: string,
     pageNum?: number,
     colunaOrdenacao?: 1 | 2,
@@ -77,4 +97,5 @@ export type TurmaState = {
 }
 
 export type TurmaActionTypes = GetTurmasRequestedAction | GetTurmasSucceededAction | GetTurmasFailedAction | ChangeOrdenacaoAction |
-    ChangeDirecaoOrdenacaoAction | ChangeBuscaAction | ChangePageAction | CleanErrosAction | ChooseTurmaSelecionadaAction; 
+    ChangeDirecaoOrdenacaoAction | ChangeBuscaAction | ChangePageAction | CleanErrosAction | ChooseTurmaSelecionadaAction |
+    SolicitarAcessoRequestedAction | SolicitarAcessoSucceededAction | SolicitarAcessoFailedAction; 

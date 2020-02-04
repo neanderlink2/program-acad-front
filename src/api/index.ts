@@ -6,13 +6,15 @@ const api = axios.create({
     baseURL: process.env.NODE_ENV === 'production' ?
         'https://programacadapipresentation20200109114653.azurewebsites.net/api'
         :
-        'https://programacadapipresentation20200109114653.azurewebsites.net/api',
+        'https://programacadapipresentation20200109114653.azurewebsites.net/api'
+        //'http://localhost:55965/api',
 });
 
 api.interceptors.request.use(async config => {
     const user = store.getState().login.user;
 
-    if (user && user.token) {        
+    if (user && user.token) {
+        console.log(user.token);
         config.headers.Authorization = `Bearer ${user.token}`;
     }
     return config;

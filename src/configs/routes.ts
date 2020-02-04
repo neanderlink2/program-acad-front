@@ -6,6 +6,7 @@ import PrimeiroAcessoScreen from '../pages/primeiro-acesso';
 import { CadastroScreen } from '../pages/cadastro/index';
 import { AlgoritmosScreen } from '../pages/algoritmos';
 import { AmbienteDevScreen } from '../pages/ambiente-dev';
+import { ContaScreen } from '../pages/conta';
 
 type RouteModel = {
     path: string,
@@ -42,6 +43,12 @@ export const routes: RouteModel[] = [
         path: '/turmas',
         component: TurmaScreen,
         title: 'Turmas inscritas - Program.Acad',
+        onlyAuthenticated: true
+    },
+    {
+        path: '/conta',
+        component: ContaScreen,
+        title: 'Minha conta - Program.Acad',
         onlyAuthenticated: true
     },
     {

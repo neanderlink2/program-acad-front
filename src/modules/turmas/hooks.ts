@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../../configs/middlewares';
-import { requisitarTurmas, limparErros as cleanErrors, selecionarTurma } from './actions';
+import { requisitarTurmas, limparErros as cleanErrors, selecionarTurma, requisitarSolicitacaoAcesso } from './actions';
 import { BuscaTurmas } from "./types";
 import { useEffect, useCallback } from 'react';
 
@@ -22,4 +22,17 @@ export const useTurmaState = ({ busca, pageIndex, colunaOrdenacao = 1, direcaoOr
     }, [buscarTurmas])
 
     return { turmas, erros, isBuscandoTurmas, buscarTurmas, limparErros, escolherTurma };
+}
+
+export const useSolicitacaoAcesso = () => {
+    const dispatch = useDispatch();
+    const { isSolicitandoAcesso, mensagemSucesso } = useSelector((states: RootState) => ({
+        isSolicitandoAcesso: states.turma.getSolicitacaoRequestPending,
+        mensagemSucesso: states.turma.mensagemSucessoSolicitacao
+    }));
+    const solicitarAcesso = useCallback((idTurma: string) => {
+        dispatch(requisitarSolicitacaoAcesso(idTurma));
+    }, [dispatch]);
+
+    return { isSolicitandoAcesso, mensagemSucesso, solicitarAcesso };
 }

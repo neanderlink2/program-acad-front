@@ -8,11 +8,11 @@ export interface HomeScreenProps {
     title?: string
 }
 
-export const HomeScreen = ({ title }: HomeScreenProps) : React.ReactElement => {
+export const HomeScreen = ({ title }: HomeScreenProps): React.ReactElement => {
     useDocumentTitle(title);
 
     return (
-        <Fragment>
+        <>
             <WhiteSection>
                 <CenterSection>
                     <Typography variant="h3" color="primary" style={{ display: 'flex', flex: 1 }}>A sua plataforma de desenvolvimento de algoritmos na Web</Typography>
@@ -35,6 +35,6 @@ export const HomeScreen = ({ title }: HomeScreenProps) : React.ReactElement => {
                     <SectionText>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in commodo mi, et condimentum lorem. Vivamus in justo sed odio placerat feugiat.</SectionText>
                 </Container>
             </Section>
-        </Fragment>
+        </>
     );
 }
