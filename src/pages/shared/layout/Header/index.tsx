@@ -11,7 +11,7 @@ import { useAsideMenu } from '../../../../modules/aside-menu/hooks';
 
 const Header = () => {
     const history = useHistory();
-    const { user } = useUserData();
+    const { userClaims } = useUserData();
     const width = useWindowWidth();
     const { showMenu } = useAsideMenu();
     return (
@@ -26,8 +26,8 @@ const Header = () => {
                 <TituloTopo variant="h6" onClick={() => history.push('/')}>Program.Acad</TituloTopo>
                 {
                     width > 650 ?
-                        user ?
-                            <AuthenticatedMenu userName={user.displayName} signOut={() => signOut() as Promise<void | Error>} />
+                        userClaims ?
+                            <AuthenticatedMenu userName={userClaims.name} signOut={() => signOut() as Promise<void | Error>} />
                             :
                             <NonAuthenticatedMenu />
                         :

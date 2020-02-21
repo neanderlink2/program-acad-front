@@ -1,44 +1,50 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useHistoricoAlgoritmos } from '../../modules/detalhes-usuario/hooks';
 import { useUserData } from '../../components/hooks/index';
 import { Container, Grid, Card, CardMedia, CardContent, Typography, Chip, CircularProgress, IconButton, Button, Fab } from '@material-ui/core';
 import { InlineText, SpacedBetweenPanel, CardDadosUsuario, CenterPanel } from './styles';
 import { CalendarToday, Room, Mail, Accessibility, Refresh, Edit } from '@material-ui/icons';
 import { LinguagensProgramacaoEnum } from '../../models/algoritmos';
+import { useHistory } from 'react-router-dom';
+import { format, parse } from 'date-fns';
 
 export const ContaScreen = () => {
     const { data, isLoading, buscarHistorico } = useHistoricoAlgoritmos();
-    const { userClaims, user } = useUserData();
-
+    const { userClaims } = useUserData();
+    const history = useHistory();
+    const dataNascimentoFormatada = useMemo(() => {
+        if (userClaims) {
+            return format(parse(userClaims.data_nascimento, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy');
+        }
+        return "-";
+    }, [userClaims]);
     return (
         <Container>
             <Grid container>
-                <Grid item xs={6} sm={4} md={2} style={{ paddingRight: 5 }}>
+                <Grid item xs={12} sm={6} md={3} style={{ padding: 5 }}>
                     <Card>
                         <CardMedia
                             component="img"
                             alt="Perfil usuário"
                             height="200"
-                            image={user?.photoURL ?? ""}
+                            image={userClaims?.picture ?? ""}
                         />
                     </Card>
                 </Grid>
-                <Grid item xs={6} sm={8} md={10} style={{ paddingLeft: 5 }}>
+                <Grid item xs={12} sm={6} md={9} style={{ padding: 5 }}>
                     <Card>
                         <CardDadosUsuario>
-
-                            <Typography variant="h4">{user?.displayName ?? ""} <small>({userClaims?.nickname ?? ""})</small>
-                                <Fab color="secondary" style={{ float: 'right' }}>
+                            <Typography variant="h4">{userClaims?.name ?? "-"} <small>({userClaims?.nickname ?? "-"})</small>
+                                <Fab color="secondary" style={{ float: 'right' }} onClick={() => history.push("/conta/edicao")}>
                                     <Edit />
                                 </Fab>
                             </Typography>
                             <SpacedBetweenPanel>
-                                <InlineText><CalendarToday style={{ marginRight: 10 }} /> 00/00/0000</InlineText>
-                                <InlineText><Room style={{ marginRight: 10 }} /> 00.000-000</InlineText>
-                                <InlineText><Mail style={{ marginRight: 10 }} /> email.usuario@email.com</InlineText>
-                                <InlineText><Accessibility style={{ marginRight: 10 }} /> Masculino</InlineText>
+                                <InlineText><CalendarToday style={{ marginRight: 10 }} /> {dataNascimentoFormatada}</InlineText>
+                                <InlineText><Room style={{ marginRight: 10 }} /> {userClaims?.cep ?? "-"}</InlineText>
+                                <InlineText><Mail style={{ marginRight: 10 }} /> {userClaims?.email ?? "-"}</InlineText>
+                                <InlineText><Accessibility style={{ marginRight: 10 }} /> {userClaims?.sexo === "M" ? "Masculino" : "Feminino" ?? "-"}</InlineText>
                             </SpacedBetweenPanel>
-
                         </CardDadosUsuario>
                     </Card>
                 </Grid>
@@ -47,9 +53,12 @@ export const ContaScreen = () => {
                 <Grid item xs={12}>
                     <Typography variant="h5">
                         Algoritmos concluídos
-                        <IconButton onClick={buscarHistorico}>
-                            {isLoading ? <CircularProgress color="inherit" size={12} /> : <Refresh />}
-                        </IconButton>
+                        {
+                            !isLoading &&
+                            <IconButton onClick={buscarHistorico}>
+                                <Refresh />
+                            </IconButton>
+                        }
                     </Typography>
                 </Grid>
                 {

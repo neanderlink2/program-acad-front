@@ -3,6 +3,7 @@ import { useSnackbar } from 'notistack';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../configs/middlewares';
 import { useLocation } from 'react-router-dom';
+import { updateUser } from '../../configs/firebaseConfig';
 
 export const useDocumentTitle = (title?: string) => {
     useEffect(() => {
@@ -43,19 +44,25 @@ export const useUserData = () => {
     useEffect(() => {
         if (userToken) {
             userToken.user.getIdTokenResult(true)
-                .then((result) => {                    
+                .then((result) => {
                     setUserClaims(result.claims);
                     setToken(result.token);
                     setIsPrimeiroAcesso(!Boolean(result.claims.nickname));
                 });
         }
         return () => {
-           //setUserClaims(null);
             setToken('');
             setIsPrimeiroAcesso(null);
         }
     }, [userToken]);
-    return { userClaims, user: userToken ? userToken.user : undefined, token, isPrimeiroAcesso };
+
+    const atualizarUsuario = () => {
+        if (userToken) {
+            updateUser(userToken.user)
+        }
+    }
+
+    return { userClaims, user: userToken?.user, token, isPrimeiroAcesso, atualizarUsuario };
 }
 export const useQuery = () => {
     return new URLSearchParams(useLocation().search);

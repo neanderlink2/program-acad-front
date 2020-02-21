@@ -3,10 +3,12 @@ import { HistoricoAlgoritmoUsuario } from '../../models/user';
 export const GET_HISTORICO_ALGORITMOS_REQUESTED = '@detalhesUsuario/GET_HISTORICO_ALGORITMOS_REQUESTED';
 export const GET_HISTORICO_ALGORITMOS_SUCCEEDED = '@detalhesUsuario/GET_HISTORICO_ALGORITMOS_SUCCEEDED';
 export const GET_HISTORICO_ALGORITMOS_FAILED = '@detalhesUsuario/GET_HISTORICO_ALGORITMOS_FAILED';
+export const GET_HISTORICO_ALGORITMOS_CLEAN_ERRORS = '@detalhesUsuario/GET_HISTORICO_ALGORITMOS_CLEAN_ERRORS';
 
 export const UPDATE_DADOS_REQUESTED = '@detalhesUsuario/UPDATE_DADOS_REQUESTED';
 export const UPDATE_DADOS_SUCCEEDED = '@detalhesUsuario/UPDATE_DADOS_SUCCEEDED';
 export const UPDATE_DADOS_FAILED = '@detalhesUsuario/UPDATE_DADOS_FAILED';
+export const UPDATE_DADOS_CLEAN_ERRORS = '@detalhesUsuario/UPDATE_DADOS_CLEAN_ERRORS';
 
 export type UpdateDadosPayload = {
     nomeCompleto?: string,
@@ -31,6 +33,11 @@ interface GetHistoricoAlgoritmosFailedAction {
     payload: string[]
 }
 
+interface GetHistoricoAlgoritmosCleanErrorsAction {
+    type: typeof GET_HISTORICO_ALGORITMOS_CLEAN_ERRORS,
+    payload?: any
+}
+
 export interface UpdateDadosRequestAction {
     type: typeof UPDATE_DADOS_REQUESTED,
     payload: UpdateDadosPayload
@@ -43,6 +50,11 @@ interface UpdateDadosSucceededAction {
 interface UpdateDadosFailedAction {
     type: typeof UPDATE_DADOS_FAILED,
     payload: string[]
+}
+
+interface UpdateDadosCleanErrorsAction {
+    type: typeof UPDATE_DADOS_CLEAN_ERRORS,
+    payload?: any
 }
 
 type RequestsState = {
@@ -64,4 +76,4 @@ export type DetalhesUsuarioState = {
 }
 
 export type DetalhesUsuarioActionTypes = GetHistoricoAlgoritmosRequestAction | GetHistoricoAlgoritmosSucceededAction | GetHistoricoAlgoritmosFailedAction |
-    UpdateDadosRequestAction | UpdateDadosSucceededAction | UpdateDadosFailedAction;
+    GetHistoricoAlgoritmosCleanErrorsAction | UpdateDadosRequestAction | UpdateDadosSucceededAction | UpdateDadosFailedAction | UpdateDadosCleanErrorsAction;

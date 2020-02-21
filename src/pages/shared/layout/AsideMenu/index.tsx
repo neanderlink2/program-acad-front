@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SwipeableDrawer, List, ListItem, ListItemIcon, ListItemText, Divider, Button } from '@material-ui/core';
-import { ArrowBack, Person, Assignment, People, AccountCircle } from '@material-ui/icons';
+import { ArrowBack, Person, People, AccountCircle } from '@material-ui/icons';
 import { useAsideMenu } from '../../../../modules/aside-menu/hooks';
 import { TopAsideMenu } from './styles';
 import { signOut } from '../../../../configs/firebaseConfig'

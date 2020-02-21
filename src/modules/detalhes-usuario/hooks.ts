@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../configs/middlewares';
-import { requisitarHistoricoAlgoritmos, requisitarAtualizacaoDados } from './actions';
+import { requisitarHistoricoAlgoritmos, requisitarAtualizacaoDados, limparErrosAtualizacaoDados } from './actions';
 import { UpdateDadosPayload } from './types';
 
 export const useHistoricoAlgoritmos = () => {
@@ -37,5 +37,9 @@ export const useAtualizacaoDados = () => {
         dispatch(requisitarAtualizacaoDados(dados));
     }, [dispatch]);
 
-    return { isLoading: isLoading && !hasFinished, hasErrors: errors.length > 0, errors, atualizarDados };
+    const limparErros = useCallback(() => {
+        dispatch(limparErrosAtualizacaoDados());
+    }, [dispatch]);
+
+    return { isLoading: isLoading && !hasFinished, hasErrors: errors.length > 0 && !isLoading && hasFinished, errors, atualizarDados, limparErros };
 }

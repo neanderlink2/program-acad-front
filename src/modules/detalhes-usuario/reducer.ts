@@ -1,4 +1,4 @@
-import { DetalhesUsuarioActionTypes, DetalhesUsuarioState, GET_HISTORICO_ALGORITMOS_REQUESTED, GET_HISTORICO_ALGORITMOS_SUCCEEDED, GET_HISTORICO_ALGORITMOS_FAILED, UPDATE_DADOS_REQUESTED, UPDATE_DADOS_SUCCEEDED, UPDATE_DADOS_FAILED } from './types';
+import { DetalhesUsuarioActionTypes, DetalhesUsuarioState, GET_HISTORICO_ALGORITMOS_REQUESTED, GET_HISTORICO_ALGORITMOS_SUCCEEDED, GET_HISTORICO_ALGORITMOS_FAILED, UPDATE_DADOS_REQUESTED, UPDATE_DADOS_SUCCEEDED, UPDATE_DADOS_FAILED, UPDATE_DADOS_CLEAN_ERRORS, GET_HISTORICO_ALGORITMOS_CLEAN_ERRORS } from './types';
 const initialState: DetalhesUsuarioState = {
     historicoUsuario: [],
     requests: {
@@ -54,6 +54,18 @@ export const detalhesUsuarioReducer = (state = initialState, action: DetalhesUsu
                     }
                 }
             };
+        case GET_HISTORICO_ALGORITMOS_CLEAN_ERRORS: {
+            return {
+                ...state,
+                requests: {
+                    ...state.requests,
+                    getHistorico: {
+                        ...state.requests.getHistorico,
+                        errorPayload: []
+                    }
+                }
+            }
+        }
         case UPDATE_DADOS_REQUESTED:
             return {
                 ...state,
@@ -90,6 +102,18 @@ export const detalhesUsuarioReducer = (state = initialState, action: DetalhesUsu
                     }
                 }
             };
+        case UPDATE_DADOS_CLEAN_ERRORS: {
+            return {
+                ...state,
+                requests: {
+                    ...state.requests,
+                    updateDados: {
+                        ...state.requests.updateDados,
+                        errorPayload: []
+                    }
+                }
+            }
+        }
         default:
             return state;
     }

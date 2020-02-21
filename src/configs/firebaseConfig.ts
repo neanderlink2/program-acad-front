@@ -27,7 +27,20 @@ firebaseAppAuth.onAuthStateChanged(
         if (user) {
             user.getIdTokenResult()
                 .then(result => {
-                    console.log(result.claims);
+                    store.dispatch(storeUser({ user: user, token: result.token }))
+                })
+        }
+    },
+    (error: firebase.auth.Error) => {
+        // console.log(error);
+    }
+);
+
+firebaseAppAuth.onIdTokenChanged(
+    (user) => {
+        if (user) {
+            user.getIdTokenResult()
+                .then(result => {
                     store.dispatch(storeUser({ user: user, token: result.token }))
                 })
         }
@@ -44,6 +57,11 @@ export const firebaseErrorCodes = {
     ACCOUNT_EXISTING: "auth/account-exists-with-different-credential",
     POPUP_CLOSED: "auth/popup-closed-by-user"
 };
+
+export const updateUser = (user: firebase.User) => {
+    //store.dispatch(removeUser());
+    return firebaseAppAuth.updateCurrentUser(user);
+}
 
 export const signInWithFacebook = () => {
     return firebaseAppAuth.signInWithPopup(authenticationProviders.facebookProvider);

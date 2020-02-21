@@ -1,4 +1,4 @@
-import { DetalhesUsuarioActionTypes, GET_HISTORICO_ALGORITMOS_REQUESTED, GET_HISTORICO_ALGORITMOS_SUCCEEDED, GET_HISTORICO_ALGORITMOS_FAILED, UpdateDadosPayload, UPDATE_DADOS_REQUESTED, UPDATE_DADOS_SUCCEEDED, UPDATE_DADOS_FAILED } from './types';
+import { DetalhesUsuarioActionTypes, GET_HISTORICO_ALGORITMOS_REQUESTED, GET_HISTORICO_ALGORITMOS_SUCCEEDED, GET_HISTORICO_ALGORITMOS_FAILED, UpdateDadosPayload, UPDATE_DADOS_REQUESTED, UPDATE_DADOS_SUCCEEDED, UPDATE_DADOS_FAILED, UPDATE_DADOS_CLEAN_ERRORS, GET_HISTORICO_ALGORITMOS_CLEAN_ERRORS } from './types';
 import { HistoricoAlgoritmoUsuario } from '../../models/user';
 
 export const requisitarHistoricoAlgoritmos = (): DetalhesUsuarioActionTypes => {
@@ -22,6 +22,12 @@ export const informarErrosHistoricoAlgoritmos = (erros: string[]): DetalhesUsuar
     }
 }
 
+export const limparErrosHistoricoAlgoritmos = (): DetalhesUsuarioActionTypes => {
+    return {
+        type: GET_HISTORICO_ALGORITMOS_CLEAN_ERRORS,
+    }
+}
+
 export const requisitarAtualizacaoDados = (dados: UpdateDadosPayload): DetalhesUsuarioActionTypes => {
     return {
         type: UPDATE_DADOS_REQUESTED,
@@ -40,5 +46,11 @@ export const informarErrosAtualizacao = (erros: string[]): DetalhesUsuarioAction
     return {
         type: UPDATE_DADOS_FAILED,
         payload: erros
+    }
+}
+
+export const limparErrosAtualizacaoDados = (): DetalhesUsuarioActionTypes => {
+    return {
+        type: UPDATE_DADOS_CLEAN_ERRORS,
     }
 }
