@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { useUserLogin } from '../../../../components/hooks';
 import { routes } from '../../../../configs/routes';
+import { useAuth } from '../../../../contexts/AuthProvider';
 import { LoginRequiredScreen } from '../../../login-required';
 
 const Main = () => {
-    const { user } = useUserLogin();
+    const { user } = useAuth();
     return (
         <main style={{ marginTop: 50, paddingTop: 30 }}>
             {routes.map((route) => {

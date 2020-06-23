@@ -8,9 +8,8 @@ import {
   requisitarTurmas,
   selecionarTurma
 } from "./actions";
-import { BuscaTurmas } from "./types";
 
-export const useTurmaState = (params: BuscaTurmas) => {
+export const useTurmaState = () => {
   const dispatch = useDispatch();
   const { turmas, erros, isBuscandoTurmas } = useSelector(
     (states: RootState) => ({

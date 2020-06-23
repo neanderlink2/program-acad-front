@@ -12,8 +12,8 @@ import { LinguagensProgramacao } from './algoritmos';
 // }
 
 export type UserToken = {
-    token: string,
-    user: firebase.User
+    token?: string,
+    user: firebase.User | null
 };
 
 export type HistoricoAlgoritmoUsuario = {

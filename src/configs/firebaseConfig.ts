@@ -22,23 +22,6 @@ const authenticationProviders = {
   facebookProvider: new firebase.auth.FacebookAuthProvider(),
 };
 
-
-
-// firebaseAppAuth.onAuthStateChanged(
-//   (user) => {
-//     if (user) {
-//       user.getIdTokenResult().then((result) => {
-//         store.dispatch(storeUser({ user: user, token: result.token }));
-//       });
-//     } else {
-//       store.dispatch(removeUser());
-//     }
-//   },
-//   (error: firebase.auth.Error) => {
-//     // console.log(error);
-//   }
-// );
-
 firebaseAppAuth.onIdTokenChanged(
   (user) => {
     if (user) {
@@ -60,9 +43,8 @@ export const firebaseErrorCodes = {
   POPUP_CLOSED: "auth/popup-closed-by-user",
 };
 
-export const updateUser = (user: firebase.User) => {
-  //store.dispatch(removeUser());
-  return firebaseAppAuth.updateCurrentUser(user);
+export const updateUser = () => {
+  return firebaseAppAuth.currentUser?.getIdToken(true);
 };
 
 export const signInWithFacebook = () => {

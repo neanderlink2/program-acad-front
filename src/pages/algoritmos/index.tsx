@@ -3,13 +3,13 @@ import { ArrowBack } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { FlexLine } from "../../components/flex-helpers";
-import { useUserLogin } from "../../components/hooks";
+import { useAuth } from "../../contexts/AuthProvider";
 import { useAlgoritmoState } from "../../modules/algoritmos/hooks";
 import { OrdenacaoSelect } from "./ordenacao-select";
 import { PaginatedGrid } from "./paginated-grid";
 
 export const AlgoritmosScreen = () => {
-  const { user } = useUserLogin();
+  const { user } = useAuth();
   const [userName, setUserName] = useState("");
   const [busca, setBusca] = useState("");
   const [paginaAtual, setPaginaAtual] = useState(0);
@@ -21,8 +21,8 @@ export const AlgoritmosScreen = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (user && user.displayName) {
-      setUserName(user.displayName);
+    if (user && user.nomeCompleto) {
+      setUserName(user.nomeCompleto);
     }
   }, [user]);
 

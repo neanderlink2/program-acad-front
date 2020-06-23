@@ -1,8 +1,7 @@
 import { useSnackbar } from "notistack";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { updateUser } from "../../configs/firebaseConfig";
 import { RootState } from "../../configs/middlewares";
 
 export const useDocumentTitle = (title?: string) => {
@@ -34,41 +33,41 @@ export const useSnackbars = () => {
   };
 };
 
-export const useUserLogin = () => {
-  const userToken = useSelector((states: RootState) => states.login?.user);
+// export const useUserLogin = () => {
+//   const userToken = useSelector((states: RootState) => states.login?.user);
 
-  const [userClaims, setUserClaims] = useState<any>(null);
-  const [token, setToken] = useState<string>("");
-  const [isPrimeiroAcesso, setIsPrimeiroAcesso] = useState<any>(null);
-/// TO-DO: ALTERAR ESSE HOOK PARA UTILIZAR CONTEXT API.
-  useEffect(() => {
-    if (userToken) {
-      userToken.user.getIdTokenResult(true).then((result) => {
-        setUserClaims(result.claims);
-        setToken(result.token);
-        setIsPrimeiroAcesso(!Boolean(result.claims.nickname));
-      });
-    }
-    return () => {
-      setToken("");
-      setIsPrimeiroAcesso(null);
-    };
-  }, [userToken]);
+//   const [userClaims, setUserClaims] = useState<any>(null);
+//   const [token, setToken] = useState<string>("");
+//   const [isPrimeiroAcesso, setIsPrimeiroAcesso] = useState<any>(null);
+// /// TO-DO: ALTERAR ESSE HOOK PARA UTILIZAR CONTEXT API.
+//   useEffect(() => {
+//     if (userToken) {
+//       userToken.user.getIdTokenResult(true).then((result) => {
+//         setUserClaims(result.claims);
+//         setToken(result.token);
+//         setIsPrimeiroAcesso(!Boolean(result.claims.nickname));
+//       });
+//     }
+//     return () => {
+//       setToken("");
+//       setIsPrimeiroAcesso(null);
+//     };
+//   }, [userToken]);
 
-  const atualizarUsuario = () => {
-    if (userToken) {
-      updateUser(userToken.user);
-    }
-  };
+//   const atualizarUsuario = () => {
+//     if (userToken) {
+//       updateUser(userToken.user);
+//     }
+//   };
 
-  return {
-    userClaims,
-    user: userToken?.user,
-    token,
-    isPrimeiroAcesso,
-    atualizarUsuario,
-  };
-};
+//   return {
+//     userClaims,
+//     user: userToken?.user,
+//     token,
+//     isPrimeiroAcesso,
+//     atualizarUsuario,
+//   };
+// };
 
 export const useUserData = () => {
   const userToken = useSelector((states: RootState) => states.login?.user);

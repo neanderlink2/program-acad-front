@@ -2,12 +2,13 @@ import { Container, TextField, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { FlexLine } from "../../components/flex-helpers/index";
-import {
-    useDocumentTitle,
-    useSnackbars, useUserLogin
-} from "../../components/hooks/index";
+import { useDocumentTitle, useSnackbars } from "../../components/hooks/index";
 import { LoadingScreen } from "../../components/loading/index";
-import { useSolicitacaoAcesso, useTurmaState } from "../../modules/turmas/hooks";
+import { useAuth } from "../../contexts/AuthProvider";
+import {
+  useSolicitacaoAcesso,
+  useTurmaState
+} from "../../modules/turmas/hooks";
 import { OrdenacaoSelect } from "./ordenacao-select";
 import { PaginatedGrid } from "./paginated-grid/index";
 
@@ -20,12 +21,12 @@ const TurmaScreen = ({ title }: { title: string }) => {
     "asc"
   );
 
-  const { user, isPrimeiroAcesso } = useUserLogin();
+  const { user, firstAccess } = useAuth();
   const [userName, setUserName] = useState("");
   const [turmaSelecionada, setTurmaSelecionada] = useState("");
 
   const history = useHistory();
-  const { success, warning } = useSnackbars();
+  const { success, error } = useSnackbars();
 
   const {
     turmas,
@@ -34,12 +35,11 @@ const TurmaScreen = ({ title }: { title: string }) => {
     buscarTurmas,
     erros,
     limparErros,
-  } = useTurmaState({
-    busca,
-    pageIndex: paginaAtual,
-    colunaOrdenacao: ordenacao,
-    direcaoOrdenacao: direcaoOrdenacao,
-  });
+  } = useTurmaState();
+
+  useEffect(() => {
+    buscarTurmas(busca, ordenacao, direcaoOrdenacao, paginaAtual, 6);
+  }, [buscarTurmas, busca, paginaAtual, ordenacao, direcaoOrdenacao]);
 
   const {
     isSolicitandoAcesso,
@@ -54,8 +54,8 @@ const TurmaScreen = ({ title }: { title: string }) => {
   }, [turmas]);
 
   useEffect(() => {
-    if (user && user.displayName) {
-      setUserName(user.displayName);
+    if (user && user.nomeCompleto) {
+      setUserName(user.nomeCompleto);
     }
   }, [user]);
 
@@ -73,9 +73,9 @@ const TurmaScreen = ({ title }: { title: string }) => {
   //     }
   //   }, [erros, warning, limparErros]);
 
-  if (isPrimeiroAcesso === null) {
+  if (firstAccess === null) {
     return <LoadingScreen style={{ margin: 15 }} />;
-  } else if (isPrimeiroAcesso) {
+  } else if (firstAccess) {
     return <Redirect to="/primeiro-acesso" />;
   }
 
@@ -120,15 +120,17 @@ const TurmaScreen = ({ title }: { title: string }) => {
           history.push(`/algoritmos/${turma.id}`);
         }}
         onInscreverClick={(turma) => {
-          //setTurmaSelecionada(turma.id);
           solicitarAcesso(
             turma.id as string,
             () => {
-              success(mensagemSucesso);
+              success(
+                `Solicitação de acesso à turma ${turma.nomeTurma} foi enviado com sucesso.`
+              );
             },
-            () => {}
+            (errors) => {
+              error(errors);
+            }
           );
-          //success(`Pedido de inscrição feito com sucesso. Por favor, aguarde uma confirmação do prof. ${turma.nomeInstrutor}.`);
         }}
       />
     </Container>

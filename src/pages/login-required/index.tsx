@@ -1,32 +1,55 @@
-import { Button, Card, CardContent, Container, Typography } from '@material-ui/core';
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { useDocumentTitle, useUserLogin } from '../../components/hooks';
-import { LoadingScreen } from '../../components/loading';
+import {
+    Button,
+    Card,
+    CardContent,
+    Container,
+    Typography
+} from "@material-ui/core";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { useDocumentTitle } from "../../components/hooks";
+import { LoadingScreen } from "../../components/loading";
+import { useAuth } from "../../contexts/AuthProvider";
 
 export const LoginRequiredScreen = ({ title }: { title: string }) => {
-    useDocumentTitle(title);
-    const history = useHistory();
-    const { isPrimeiroAcesso } = useUserLogin();
+  useDocumentTitle(title);
+  const history = useHistory();
+  const { firstAccess } = useAuth();
 
-    if (isPrimeiroAcesso === null) {
-        return (<LoadingScreen style={{ margin: 25 }} />);
-    }
+  if (firstAccess === null) {
+    return <LoadingScreen style={{ margin: 25 }} />;
+  }
 
-    return (
-        <Container>
-            <Card>
-                <CardContent>
-                    <Typography variant="h5" align="center">Ops, tivemos um problema.</Typography>
-                    <Typography variant="body2">Parece que você está tentando acessar uma página protegida, mas ainda não está autenticado. Deseja entrar em uma conta?</Typography>
-                    <Button variant="contained" color="secondary" onClick={() => {
-                        history.push('/login');
-                    }}>Sim, entrar na conta</Button>
-                    <Button variant="text" onClick={() => {
-                        history.push('/');
-                    }}>Não, voltar ao início</Button>
-                </CardContent>
-            </Card>
-        </Container>
-    )
-}
+  return (
+    <Container>
+      <Card>
+        <CardContent>
+          <Typography variant="h5" align="center">
+            Ops, tivemos um problema.
+          </Typography>
+          <Typography variant="body2">
+            Parece que você está tentando acessar uma página protegida, mas
+            ainda não está autenticado. Deseja entrar em uma conta?
+          </Typography>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              history.push("/login");
+            }}
+          >
+            Sim, entrar na conta
+          </Button>
+          <Button
+            variant="text"
+            onClick={() => {
+              history.push("/");
+            }}
+          >
+            Não, voltar ao início
+          </Button>
+        </CardContent>
+      </Card>
+    </Container>
+  );
+};
