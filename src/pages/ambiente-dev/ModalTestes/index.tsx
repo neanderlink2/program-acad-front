@@ -1,15 +1,14 @@
-import React from 'react';
-import { Dialog, Slide, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, DialogProps, CircularProgress } from '@material-ui/core';
-import { TransitionProps } from '@material-ui/core/transitions';
-import { TestResult, TestsContainer, ModalTitle } from './styles';
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, Slide, SlideProps } from '@material-ui/core';
 import { Check, Close } from '@material-ui/icons';
-import { useValidacaoAlgoritmoState } from '../../../modules/ambiente-dev/hooks';
-import { useHistory, useParams } from 'react-router-dom';
+import React from 'react';
 import { Animated } from "react-animated-css";
+import { useHistory, useParams } from 'react-router-dom';
+import { useValidacaoAlgoritmoState } from '../../../modules/ambiente-dev/hooks';
+import { ModalTitle, TestResult, TestsContainer } from './styles';
 
 
-const Transition = React.forwardRef<unknown, TransitionProps>(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
+const Transition = React.forwardRef<unknown, SlideProps>(function Transition(props, ref) {
+    return <Slide {...props} ref={ref} direction="up" />;
 });
 
 export const ModalTestes = () => {
@@ -19,8 +18,8 @@ export const ModalTestes = () => {
 
     return (
         <Dialog
-            open={isValidando}
-            TransitionComponent={Transition}
+            open={isValidando}            
+            //TransitionComponent={Transition}
             onClose={() => { }}
         >
             <DialogContent>
