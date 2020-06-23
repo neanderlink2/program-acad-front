@@ -1,16 +1,16 @@
-import React, { useMemo } from 'react';
-import { useHistoricoAlgoritmos } from '../../modules/detalhes-usuario/hooks';
-import { useUserData } from '../../components/hooks/index';
-import { Container, Grid, Card, CardMedia, CardContent, Typography, Chip, CircularProgress, IconButton, Button, Fab } from '@material-ui/core';
-import { InlineText, SpacedBetweenPanel, CardDadosUsuario, CenterPanel } from './styles';
-import { CalendarToday, Room, Mail, Accessibility, Refresh, Edit } from '@material-ui/icons';
-import { LinguagensProgramacaoEnum } from '../../models/algoritmos';
-import { useHistory } from 'react-router-dom';
+import { Card, CardContent, CardMedia, Chip, CircularProgress, Container, Fab, Grid, IconButton, Typography } from '@material-ui/core';
+import { Accessibility, CalendarToday, Edit, Mail, Refresh, Room } from '@material-ui/icons';
 import { format, parse } from 'date-fns';
+import React, { useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useUserLogin } from '../../components/hooks/index';
+import { LinguagensProgramacaoEnum } from '../../models/algoritmos';
+import { useHistoricoAlgoritmos } from '../../modules/detalhes-usuario/hooks';
+import { CardDadosUsuario, CenterPanel, InlineText, SpacedBetweenPanel } from './styles';
 
 export const ContaScreen = () => {
     const { data, isLoading, buscarHistorico } = useHistoricoAlgoritmos();
-    const { userClaims } = useUserData();
+    const { userClaims } = useUserLogin();
     const history = useHistory();
     const dataNascimentoFormatada = useMemo(() => {
         if (userClaims) {

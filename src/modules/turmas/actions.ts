@@ -1,21 +1,33 @@
-import {
-    TurmaActionTypes,
-    BuscaTurmas,
-    GET_TURMAS_REQUESTED,
-    GET_TURMAS_SUCCEEDED,
-    GET_TURMAS_FAILED,
-    CHANGE_PAGE,
-    CHANGE_ORDENACAO,
-    CHANGE_DIRECAO_ORDENACAO,
-    CHANGE_BUSCA,
-    CLEAN_TURMA_ERROS,
-    CHANGE_TURMA_SELECIONADA,
-    SOLICITAR_ACESSO_REQUESTED,
-    SOLICITAR_ACESSO_SUCCEEDED,
-    SOLICITAR_ACESSO_FAILED
-} from './types';
 import { PagedList } from '../../models/pagedList';
+import { FailedCallback, SuccessCallback } from '../../models/requestCallbacks';
 import { ListagemTurma } from '../../models/turma';
+import {
+    BuscaTurmas,
+
+
+
+
+
+
+    CHANGE_BUSCA, CHANGE_DIRECAO_ORDENACAO, CHANGE_ORDENACAO, CHANGE_PAGE,
+
+
+
+
+    CHANGE_TURMA_SELECIONADA, CLEAN_TURMA_ERROS, GET_TURMAS_FAILED, GET_TURMAS_REQUESTED,
+    GET_TURMAS_SUCCEEDED,
+
+
+
+
+
+
+
+
+
+    SOLICITAR_ACESSO_FAILED, SOLICITAR_ACESSO_REQUESTED,
+    SOLICITAR_ACESSO_SUCCEEDED, TurmaActionTypes
+} from './types';
 
 export const requisitarTurmas = (params: BuscaTurmas): TurmaActionTypes => {
     return {
@@ -72,10 +84,10 @@ export const limparErros = (): TurmaActionTypes => {
     }
 }
 
-export const requisitarSolicitacaoAcesso = (idTurma: string): TurmaActionTypes => {
+export const requisitarSolicitacaoAcesso = (idTurma: string, onSuccess: SuccessCallback, onFailed: FailedCallback): TurmaActionTypes => {
     return {
         type: SOLICITAR_ACESSO_REQUESTED,
-        payload: idTurma
+        payload: {idTurma, onSuccess, onFailed}
     }
 }
 

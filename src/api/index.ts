@@ -1,17 +1,18 @@
 import axios, { AxiosError } from 'axios';
-import store from '../configs/middlewares';
 import { signOut } from '../configs/firebaseConfig';
+import store from '../configs/middlewares';
 
 const api = axios.create({
     baseURL: process.env.NODE_ENV === 'production' ?
         'https://programacadapipresentation20200109114653.azurewebsites.net/api'
         :
-        'https://programacadapipresentation20200109114653.azurewebsites.net/api'
+        'http://localhost:9000/api'
+        //'https://programacadapipresentation20200109114653.azurewebsites.net/api'
         //'http://localhost:63857/api',
 });
 
 api.interceptors.request.use(async config => {
-    const user = store.getState().login.user;
+    const user = store.getState().login?.user;
 
     if (user && user.token) {
         console.log(user.token);

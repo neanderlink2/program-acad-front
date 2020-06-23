@@ -1,8 +1,8 @@
+import { Button, ButtonGroup, Grid, Typography } from '@material-ui/core';
 import React, { Fragment, useMemo } from 'react';
-import { Grid, Button, ButtonGroup, Typography } from '@material-ui/core';
-import { LoadingItem } from './loading-item';
-import { GridItem } from './grid-item/index';
 import { PagedList } from '../../../models/pagedList';
+import { GridItem } from './grid-item/index';
+import { LoadingItem } from './loading-item';
 
 type PaginatedGridProps = {
     pagedList?: PagedList<any>,
@@ -44,12 +44,12 @@ export const PaginatedGrid = ({ pagedList, isLoading = false, onPageChange, onEn
                         :
                         pagedList && pagedList.items.map((turma) => {
                             return <GridItem key={turma.id}
-                                image={turma.imagemTurma}
+                                image={turma.urlImagem}
                                 imageAlt={turma.titulo}
                                 instrutor={turma.nomeInstrutor}
                                 isUsuarioInscrito={turma.isUsuarioInscrito}
-                                dataHoraTermino={turma.dataTermino}
-                                title={turma.titulo}
+                                dataHoraTermino={turma.dataHoraTermino}
+                                title={turma.nomeTurma}
                                 onItemClicked={() => onItemClick(turma)} />
                         })
             }

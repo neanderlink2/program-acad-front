@@ -1,13 +1,13 @@
+import { Button, Card, CardContent, CircularProgress, Container, TextField, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { Container, Card, CardContent, CircularProgress, Typography, TextField, Button } from '@material-ui/core';
-import { useUserData, useSnackbars, useDocumentTitle } from '../../components/hooks/index';
 import { Redirect } from 'react-router-dom';
 import { FlexEnd } from '../../components/flex-helpers';
+import { useDocumentTitle, useSnackbars, useUserLogin } from '../../components/hooks/index';
 import { LoadingScreen } from '../../components/loading/index';
 import { useAccountState } from '../../modules/account/hooks';
 
 const PrimeiroAcessoScreen = ({ title }: { title: string }) => {
-    const { isPrimeiroAcesso, user } = useUserData();
+    const { isPrimeiroAcesso, user } = useUserLogin();
     const [nickname, setNickname] = useState('');
     const { warning } = useSnackbars();
     const { adicionandoUsuarioExterno, cleanErrors, erros, criarUsuarioExterno } = useAccountState(nickname);

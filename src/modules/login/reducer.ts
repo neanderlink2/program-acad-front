@@ -1,8 +1,9 @@
-import { LoginActionTypes, LoginState, STORE_USER, REMOVE_USER } from './types'
+import { LoginActionTypes, LoginState, REMOVE_USER, STORE_USER } from './types';
 
 const initialState: LoginState = {
     user: undefined,
-    isLogado: false
+    isLogado: false,
+    carregando: true
 };
 
 export const loginReducer = (state = initialState, action: LoginActionTypes) => {
@@ -10,11 +11,13 @@ export const loginReducer = (state = initialState, action: LoginActionTypes) => 
         case STORE_USER:
             return {
                 user: action.payload,
-                isLogado: true
+                isLogado: true,
+                carregando: false
             };
         case REMOVE_USER:
             return {
-                isLogado: false
+                isLogado: false,
+                carregando: false
             };
         default:
             return state;

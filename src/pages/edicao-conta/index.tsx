@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Container, Card, CardContent, Typography, Grid, TextField, MenuItem, Button, CircularProgress } from '@material-ui/core';
-import InputMask from "react-input-mask";
-import { useAtualizacaoDados } from '../../modules/detalhes-usuario/hooks';
-import { parse } from 'date-fns'
-import { useSnackbars } from '../../components/hooks';
-import { useUserData } from '../../components/hooks';
-import { useHistory } from 'react-router-dom';
-import { format } from 'date-fns'
+import { Button, Card, CardContent, CircularProgress, Container, Grid, MenuItem, TextField, Typography } from '@material-ui/core';
 import { ArrowBack } from '@material-ui/icons';
+import { format, parse } from 'date-fns';
+import React, { useEffect, useState } from 'react';
+import InputMask from "react-input-mask";
+import { useHistory } from 'react-router-dom';
+import { useSnackbars, useUserLogin } from '../../components/hooks';
+import { useAtualizacaoDados } from '../../modules/detalhes-usuario/hooks';
 
 export const EdicaoContaScreen = () => {
     const [nomeCompleto, setNomeCompleto] = useState('');
@@ -16,7 +14,7 @@ export const EdicaoContaScreen = () => {
     const [sexo, setSexo] = useState('');
     const [requested, setRequested] = useState(false);
     const { isLoading, hasErrors, errors, atualizarDados, limparErros } = useAtualizacaoDados();
-    const { userClaims } = useUserData();
+    const { userClaims } = useUserLogin();
     const history = useHistory();
     function onAtualizarClicked() {
         const data = parse(dataNascimento, 'dd/MM/yyyy', new Date());

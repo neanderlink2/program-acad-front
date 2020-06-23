@@ -1,38 +1,68 @@
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from '../../configs/middlewares';
-import { requisitarTurmas, limparErros as cleanErrors, selecionarTurma, requisitarSolicitacaoAcesso } from './actions';
+import { RootState } from "../../configs/middlewares";
+import { FailedCallback, SuccessCallback } from "../../models/requestCallbacks";
+import {
+  limparErros as cleanErrors,
+  requisitarSolicitacaoAcesso,
+  requisitarTurmas,
+  selecionarTurma
+} from "./actions";
 import { BuscaTurmas } from "./types";
-import { useEffect, useCallback } from 'react';
 
-export const useTurmaState = ({ busca, pageIndex, colunaOrdenacao = 1, direcaoOrdenacao = 'asc', totalItems = 6 }: BuscaTurmas) => {
-    const dispatch = useDispatch();
-    const { turmas, erros, isBuscandoTurmas } = useSelector((states: RootState) => ({ turmas: states.turma.listaTurmas, isBuscandoTurmas: states.turma.getTurmasPending, erros: states.turma.erros }))
-    const buscarTurmas = useCallback(() => dispatch(requisitarTurmas({
-        busca,
-        colunaOrdenacao,
-        direcaoOrdenacao,
-        pageIndex,
-        totalItems,
-    })), [dispatch, busca, colunaOrdenacao, direcaoOrdenacao, pageIndex, totalItems]);
-    const limparErros = () => dispatch(cleanErrors());
-    const escolherTurma = (idTurma: string) => dispatch(selecionarTurma(idTurma));
+export const useTurmaState = (params: BuscaTurmas) => {
+  const dispatch = useDispatch();
+  const { turmas, erros, isBuscandoTurmas } = useSelector(
+    (states: RootState) => ({
+      turmas: states.turma.listaTurmas,
+      isBuscandoTurmas: states.turma.getTurmasPending,
+      erros: states.turma.erros,
+    })
+  );
+  const buscarTurmas = useCallback(
+    (busca, colunaOrdenacao, direcaoOrdenacao, pageIndex, totalItems) =>
+      dispatch(
+        requisitarTurmas({
+          busca,
+          colunaOrdenacao,
+          direcaoOrdenacao,
+          pageIndex,
+          totalItems,
+        })
+      ),
+    [dispatch]
+  );
+  const limparErros = () => dispatch(cleanErrors());
+  const escolherTurma = (idTurma: string) => dispatch(selecionarTurma(idTurma));
 
-    useEffect(() => {
-        buscarTurmas();
-    }, [buscarTurmas])
+  // useEffect(() => {
+  //     buscarTurmas();
+  // }, [buscarTurmas])
 
-    return { turmas, erros, isBuscandoTurmas, buscarTurmas, limparErros, escolherTurma };
-}
+  return {
+    turmas,
+    erros,
+    isBuscandoTurmas,
+    buscarTurmas,
+    limparErros,
+    escolherTurma,
+  };
+};
 
 export const useSolicitacaoAcesso = () => {
-    const dispatch = useDispatch();
-    const { isSolicitandoAcesso, mensagemSucesso } = useSelector((states: RootState) => ({
-        isSolicitandoAcesso: states.turma.getSolicitacaoRequestPending,
-        mensagemSucesso: states.turma.mensagemSucessoSolicitacao
-    }));
-    const solicitarAcesso = useCallback((idTurma: string) => {
-        dispatch(requisitarSolicitacaoAcesso(idTurma));
-    }, [dispatch]);
+  const dispatch = useDispatch();
+  const { isSolicitandoAcesso, mensagemSucesso } = useSelector(
+    (states: RootState) => ({
+      isSolicitandoAcesso: states.turma.getSolicitacaoRequestPending,
+      mensagemSucesso: states.turma.mensagemSucessoSolicitacao,
+    })
+  );
+  const solicitarAcesso = useCallback(
+    (idTurma: string, onSuccess: SuccessCallback, onFailed: FailedCallback) => {
+      dispatch(requisitarSolicitacaoAcesso(idTurma, onSuccess, onFailed));
+    },
+    [dispatch]
+  );
 
-    return { isSolicitandoAcesso, mensagemSucesso, solicitarAcesso };
-}
+  return { isSolicitandoAcesso, mensagemSucesso, solicitarAcesso };
+};

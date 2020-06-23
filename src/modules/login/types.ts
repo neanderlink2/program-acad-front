@@ -15,7 +15,8 @@ interface RemoveUserAction {
 
 export type LoginState = {
     user?: UserToken,
-    isLogado: boolean
+    isLogado: boolean;
+    carregando: boolean;
 }
 
 export type LoginActionTypes = StoreUserAction | RemoveUserAction;
