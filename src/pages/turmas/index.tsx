@@ -33,19 +33,13 @@ const TurmaScreen = ({ title }: { title: string }) => {
     isBuscandoTurmas,
     escolherTurma,
     buscarTurmas,
-    erros,
-    limparErros,
   } = useTurmaState();
 
   useEffect(() => {
     buscarTurmas(busca, ordenacao, direcaoOrdenacao, paginaAtual, 6);
   }, [buscarTurmas, busca, paginaAtual, ordenacao, direcaoOrdenacao]);
 
-  const {
-    isSolicitandoAcesso,
-    mensagemSucesso,
-    solicitarAcesso,
-  } = useSolicitacaoAcesso();
+  const { solicitarAcesso } = useSolicitacaoAcesso();
 
   useEffect(() => {
     if (turmas && turmas.pageIndex > turmas.totalPages - 1) {
@@ -58,20 +52,6 @@ const TurmaScreen = ({ title }: { title: string }) => {
       setUserName(user.nomeCompleto);
     }
   }, [user]);
-
-  //   useEffect(() => {
-  //     if (!isSolicitandoAcesso && mensagemSucesso && erros.length <= 0) {
-  //       success(mensagemSucesso);
-  //       limparErros();
-  //     }
-
-  //     if (erros && erros.length > 0) {
-  //       for (let erro of erros) {
-  //         warning(erro);
-  //       }
-  //       limparErros();
-  //     }
-  //   }, [erros, warning, limparErros]);
 
   if (firstAccess === null) {
     return <LoadingScreen style={{ margin: 15 }} />;

@@ -58,6 +58,9 @@ export default function AuthProvider({ children }: PropsWithChildren<{}>) {
         token: signInResponse.user?.refreshToken,
       })
     );
+    success(
+      `Seja bem-vindo(a) à Program.Acad, ${signInResponse.user?.displayName}!`
+    );
     setIsLoading(false);
   }
 
@@ -69,6 +72,9 @@ export default function AuthProvider({ children }: PropsWithChildren<{}>) {
         user: signInResponse.user,
         token: signInResponse.user?.refreshToken,
       })
+    );
+    success(
+      `Seja bem-vindo(a) à Program.Acad, ${signInResponse.user?.displayName}!`
     );
     setIsLoading(false);
   }
@@ -82,6 +88,9 @@ export default function AuthProvider({ children }: PropsWithChildren<{}>) {
         token: signInResponse.user?.refreshToken,
       })
     );
+    success(
+      `Seja bem-vindo(a) à Program.Acad, ${signInResponse.user?.displayName}!`
+    );
     setIsLoading(false);
   }
 
@@ -93,6 +102,9 @@ export default function AuthProvider({ children }: PropsWithChildren<{}>) {
         user: signInResponse.user,
         token: signInResponse.user?.refreshToken,
       })
+    );
+    success(
+      `Seja bem-vindo(a) à Program.Acad, ${signInResponse.user?.displayName}!`
     );
     setIsLoading(false);
   }
@@ -107,7 +119,7 @@ export default function AuthProvider({ children }: PropsWithChildren<{}>) {
 
   useEffect(() => {
     if (firebaseTokenUser && firebaseTokenUser.user) {
-      firebaseTokenUser.user?.getIdTokenResult(false).then((result) => {        
+      firebaseTokenUser.user?.getIdTokenResult(false).then((result) => {
         setUsuario({
           nickname: result.claims.nickname,
           cep: result.claims.cep,
@@ -119,12 +131,8 @@ export default function AuthProvider({ children }: PropsWithChildren<{}>) {
           nomeCompleto: firebaseTokenUser.user?.displayName ?? "",
         });
         setIsPrimeiroAcesso(!result.claims.nickname);
-        success(`Seja bem-vindo(a) ${firebaseTokenUser.user?.displayName}`);
       });
     }
-    // return () => {
-    //   setIsPrimeiroAcesso(null);
-    // };
   }, [firebaseTokenUser]);
 
   return (

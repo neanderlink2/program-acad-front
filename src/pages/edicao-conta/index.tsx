@@ -1,13 +1,13 @@
 import {
-    Button,
-    Card,
-    CardContent,
-    CircularProgress,
-    Container,
-    Grid,
-    MenuItem,
-    TextField,
-    Typography
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  Container,
+  Grid,
+  MenuItem,
+  TextField,
+  Typography,
 } from "@material-ui/core";
 import { ArrowBack } from "@material-ui/icons";
 import { format, parse } from "date-fns";
@@ -24,16 +24,23 @@ export const EdicaoContaScreen = () => {
   const [cep, setCep] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [sexo, setSexo] = useState("");
-  const [requested, setRequested] = useState(false);
-  const {
-    isLoading,
-    // hasErrors,
-    // errors,
-    atualizarDados,
-    // limparErros,
-  } = useAtualizacaoDados();
+  const { isLoading, atualizarDados } = useAtualizacaoDados();
   const { user } = useAuth();
   const history = useHistory();
+
+  const { warning, success } = useSnackbars();
+
+  useEffect(() => {
+    if (user) {
+      setNomeCompleto(user.nomeCompleto);
+      setCep(user?.cep ?? "");
+      setDataNascimento(
+        format(user?.dataNascimento ?? new Date(), "dd/MM/yyyy")
+      );
+      setSexo(user?.sexo ?? "");
+    }
+  }, [user]);
+
   function onAtualizarClicked() {
     const data = parse(dataNascimento, "dd/MM/yyyy", new Date());
     atualizarDados(
@@ -52,20 +59,7 @@ export const EdicaoContaScreen = () => {
         warning(errors);
       }
     );
-    setRequested(true);
   }
-  const { warning, success } = useSnackbars();
-
-  useEffect(() => {
-    if (user) {
-      setNomeCompleto(user.nomeCompleto);
-      setCep(user?.cep ?? "");
-      setDataNascimento(
-        format(user?.dataNascimento ?? new Date(), "dd/MM/yyyy")
-      );
-      setSexo(user?.sexo ?? "");
-    }
-  }, [user]);
 
   return (
     <Container>

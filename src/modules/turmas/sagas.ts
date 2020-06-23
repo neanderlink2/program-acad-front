@@ -3,18 +3,22 @@ import { format } from "date-fns";
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import { formatErrors, getRequest, postRequest } from "../../api/index";
 import { PagedList } from "../../models/pagedList";
-import { ListagemTurma } from "../../models/turma";
+import { ListagemTurma, TurmaById } from "../../models/turma";
 import {
-    confirmarSolicitacaoAcesso, confirmarTurmasRecebidas,
-
-
-    informarFalhasSolicitacaoAcesso, informarFalhaTurmasRecebidas
+  confirmarSolicitacaoAcesso,
+  confirmarTurmaPorIdRecebida,
+  confirmarTurmasRecebidas,
+  informarFalhasSolicitacaoAcesso,
+  informarFalhaTurmaPorIdRecebida,
+  informarFalhaTurmasRecebidas
 } from "./actions";
 import {
-    GetTurmasRequestedAction,
-    GET_TURMAS_REQUESTED,
-    SolicitarAcessoRequestedAction,
-    SOLICITAR_ACESSO_REQUESTED
+  GetTurmaByIdRequestedAction,
+  GetTurmasRequestedAction,
+  GET_TURMAS_REQUESTED,
+  GET_TURMA_BY_ID_REQUESTED,
+  SolicitarAcessoRequestedAction,
+  SOLICITAR_ACESSO_REQUESTED
 } from "./types";
 
 function* getTurmaPaginadas({ payload }: GetTurmasRequestedAction) {
@@ -55,7 +59,20 @@ function* solicitarAcesso({ payload }: SolicitarAcessoRequestedAction) {
   }
 }
 
+function* getTurmaById({ payload }: GetTurmaByIdRequestedAction) {
+  try {
+    const response: AxiosResponse<TurmaById> = yield call(
+      getRequest,
+      `/v1/turmas/${payload}`
+    );
+    yield put(confirmarTurmaPorIdRecebida(response.data));
+  } catch (error) {
+    yield put(informarFalhaTurmaPorIdRecebida(formatErrors(error)));
+  }
+}
+
 export const turmaSaga = all([
   takeLatest(GET_TURMAS_REQUESTED, getTurmaPaginadas),
+  takeLatest(GET_TURMA_BY_ID_REQUESTED, getTurmaById),
   takeLatest(SOLICITAR_ACESSO_REQUESTED, solicitarAcesso),
 ]);

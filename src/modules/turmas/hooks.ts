@@ -5,7 +5,9 @@ import { FailedCallback, SuccessCallback } from "../../models/requestCallbacks";
 import {
   limparErros as cleanErrors,
   requisitarSolicitacaoAcesso,
-  requisitarTurmas,
+
+
+  requisitarTurmaPorId, requisitarTurmas,
   selecionarTurma
 } from "./actions";
 
@@ -34,10 +36,6 @@ export const useTurmaState = () => {
   const limparErros = () => dispatch(cleanErrors());
   const escolherTurma = (idTurma: string) => dispatch(selecionarTurma(idTurma));
 
-  // useEffect(() => {
-  //     buscarTurmas();
-  // }, [buscarTurmas])
-
   return {
     turmas,
     erros,
@@ -64,4 +62,21 @@ export const useSolicitacaoAcesso = () => {
   );
 
   return { isSolicitandoAcesso, mensagemSucesso, solicitarAcesso };
+};
+
+export const useTurmaById = () => {
+  const dispatch = useDispatch();
+  const { turma, isLoading } = useSelector((states: RootState) => ({
+    turma: states.turma.turmaPorId,
+    isLoading: states.turma.getTurmaByIdPending,
+  }));
+
+  const buscarTurmaPorId = useCallback(
+    (id: string) => {
+      dispatch(requisitarTurmaPorId(id));
+    },
+    [dispatch]
+  );
+
+  return { turma, isLoading, buscarTurmaPorId };
 };

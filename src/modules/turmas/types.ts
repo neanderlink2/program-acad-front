@@ -1,10 +1,13 @@
 import { PagedList } from "../../models/pagedList";
 import { FailedCallback, SuccessCallback } from "../../models/requestCallbacks";
-import { ListagemTurma } from "../../models/turma";
+import { ListagemTurma, TurmaById } from "../../models/turma";
 
 export const GET_TURMAS_REQUESTED = "turmas/GetTurmasRequested";
 export const GET_TURMAS_SUCCEEDED = "turmas/GetTurmasSucceeded";
 export const GET_TURMAS_FAILED = "turmas/GetTurmasFailed";
+export const GET_TURMA_BY_ID_REQUESTED = "turmas/GetTurmaByIdRequested";
+export const GET_TURMA_BY_ID_SUCCEEDED = "turmas/GetTurmaByIdSucceeded";
+export const GET_TURMA_BY_ID_FAILED = "turmas/GetTurmaByIdFailed";
 export const CHANGE_ORDENACAO = "turmas/ChangeOrdenacao";
 export const CHANGE_DIRECAO_ORDENACAO = "turmas/ChangeDirecaoOrdenacao";
 export const CHANGE_BUSCA = "turmas/ChangeBusca";
@@ -37,6 +40,21 @@ interface GetTurmasSucceededAction {
 
 interface GetTurmasFailedAction {
   type: typeof GET_TURMAS_FAILED;
+  payload: string[];
+}
+
+export interface GetTurmaByIdRequestedAction {
+  type: typeof GET_TURMA_BY_ID_REQUESTED;
+  payload: string;
+}
+
+interface GetTurmaByIdSucceededAction {
+  type: typeof GET_TURMA_BY_ID_SUCCEEDED;
+  payload: TurmaById;
+}
+
+interface GetTurmaByIdFailedAction {
+  type: typeof GET_TURMA_BY_ID_FAILED;
   payload: string[];
 }
 
@@ -90,7 +108,9 @@ interface ChooseTurmaSelecionadaAction {
 
 export type TurmaState = {
   listaTurmas?: PagedList<ListagemTurma>;
+  turmaPorId?: TurmaById;
   getTurmasPending: boolean;
+  getTurmaByIdPending: boolean;
   getSolicitacaoRequestPending: boolean;
   mensagemSucessoSolicitacao?: string;
   search?: string;
@@ -105,6 +125,9 @@ export type TurmaActionTypes =
   | GetTurmasRequestedAction
   | GetTurmasSucceededAction
   | GetTurmasFailedAction
+  | GetTurmaByIdRequestedAction
+  | GetTurmaByIdSucceededAction
+  | GetTurmaByIdFailedAction
   | ChangeOrdenacaoAction
   | ChangeDirecaoOrdenacaoAction
   | ChangeBuscaAction

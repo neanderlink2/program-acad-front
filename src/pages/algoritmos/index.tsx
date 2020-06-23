@@ -1,14 +1,17 @@
 import { Button, Container, TextField, Typography } from "@material-ui/core";
 import { ArrowBack } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { FlexLine } from "../../components/flex-helpers";
 import { useAuth } from "../../contexts/AuthProvider";
 import { useAlgoritmoState } from "../../modules/algoritmos/hooks";
+import { useTurmaById } from "../../modules/turmas/hooks";
+import LoadingScreen from "../shared/layout/Loading";
 import { OrdenacaoSelect } from "./ordenacao-select";
 import { PaginatedGrid } from "./paginated-grid";
 
 export const AlgoritmosScreen = () => {
+  const { id } = useParams();
   const { user } = useAuth();
   const [userName, setUserName] = useState("");
   const [busca, setBusca] = useState("");
@@ -19,6 +22,7 @@ export const AlgoritmosScreen = () => {
   );
 
   const history = useHistory();
+  const { buscarTurmaPorId, isLoading, turma } = useTurmaById();
 
   useEffect(() => {
     if (user && user.nomeCompleto) {
@@ -26,12 +30,22 @@ export const AlgoritmosScreen = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (id) {
+      buscarTurmaPorId(id);
+    }
+  }, [id]);
+
   const { isBuscandoAlgoritmos, algoritmos } = useAlgoritmoState(
     busca,
     paginaAtual,
     ordenacao,
     direcaoOrdenacao
   );
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <Container>
@@ -44,12 +58,10 @@ export const AlgoritmosScreen = () => {
         Ir para turmas
       </Button>
       <Typography variant="h4" style={{ marginTop: 15 }}>
-        Turma {algoritmos ? algoritmos.items[0].nomeTurma : ""}
+        Turma {turma?.nomeTurma ?? ""}
       </Typography>
       <Typography variant="h5" style={{ marginTop: 15, fontWeight: "normal" }}>
-        {userName}, você possui{" "}
-        {algoritmos ? algoritmos.items[0].pontosNessaTurma : ""} pontos nesta
-        turma.
+        {userName}, você possui {turma?.qtdePontos ?? 0} pontos nesta turma.
       </Typography>
       <FlexLine style={{ justifyContent: "space-between" }}>
         <TextField
