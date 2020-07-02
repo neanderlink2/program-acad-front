@@ -15,17 +15,6 @@ import {
     CREATE_INTERNAL_USER_REQUESTED
 } from "./types";
 
-// type UsuarioCriado = {
-//     id: string,
-//     nomeCompleto: string,
-//     email: string,
-//     nickname: string,
-//     sexo?: string,
-//     cep?: string,
-//     cpf?: string,
-//     dataNascimento?: Date
-// }
-
 export function* criarUsuarioExterno({ payload }: CreateExternalUserAction) {
   try {
     const body = { nickname: payload };

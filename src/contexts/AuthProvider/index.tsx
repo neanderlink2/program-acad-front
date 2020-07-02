@@ -126,7 +126,7 @@ export default function AuthProvider({ children }: PropsWithChildren<{}>) {
           cpf: result.claims.cpf,
           sexo: result.claims.sexo,
           picture: firebaseTokenUser.user?.photoURL ?? "",
-          dataNascimento: new Date(result.claims.data_nascimento),
+          dataNascimento: result.claims?.data_nascimento ? new Date(result.claims?.data_nascimento) : undefined,
           email: firebaseTokenUser.user?.email ?? "",
           nomeCompleto: firebaseTokenUser.user?.displayName ?? "",
         });

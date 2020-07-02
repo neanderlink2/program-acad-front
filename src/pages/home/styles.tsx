@@ -1,6 +1,6 @@
-import React from 'react';
 import { Container, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 import styled from 'styled-components';
 import logo from '../../assets/logo-only.png';
 
@@ -9,7 +9,7 @@ export const WhiteSection = styled.section({
 });
 
 export const CenterSection = styled(Container)({
-    display: 'flex',
+    display: 'flex !important',
     flexDirection: 'row',
     justifyContent: 'center',
     flexWrap: 'wrap',

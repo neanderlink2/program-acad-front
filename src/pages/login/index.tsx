@@ -1,10 +1,10 @@
 import {
-    Button,
-    Card,
-    CardContent,
-    Container,
-    TextField,
-    Typography
+  Button,
+  Card,
+  CardContent,
+  Container,
+  TextField,
+  Typography
 } from "@material-ui/core";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -49,11 +49,7 @@ const LoginScreen = ({ title, user, error }: LoginScreenProps) => {
     entrarGithub,
     entrarGoogle,
   } = useAuth();
-  // useUserLoginFailed(errorCode, () => {
-  //     setErrorCode(undefined)
-  // });
-  // useUserLoginSuccess(loginResult);
-
+  
   async function loginSenha() {
     await entrarUsuarioSenha(email, senha);
     history.push("/primeiro-acesso");
