@@ -1,3 +1,8 @@
+## URL de acesso:
+
+Program.Acad:
+https://white-meadow-0300e5310.azurestaticapps.net/
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
