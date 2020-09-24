@@ -1,14 +1,16 @@
-import React, { Fragment } from 'react';
-import { Typography, Container } from '@material-ui/core';
-import { WhiteSection, LogoProgramAcad, CenterSection, SectionText } from './styles';
-import { Section } from './sections';
+import { Button, Container, Typography } from '@material-ui/core';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDocumentTitle } from '../../components/hooks';
+import { Section } from './sections';
+import { CenterSection, LogoProgramAcad, SectionText, WhiteSection } from './styles';
 
 export interface HomeScreenProps {
     title?: string
 }
 
-export const HomeScreen = ({ title }: HomeScreenProps): React.ReactElement => {
+export const HomeScreen: React.FC<HomeScreenProps> = ({ title }) => {
+    const history = useHistory();
     useDocumentTitle(title);
 
     return (
@@ -21,18 +23,19 @@ export const HomeScreen = ({ title }: HomeScreenProps): React.ReactElement => {
             </WhiteSection>
 
             <Section title="O que é a Program.Acad?" endImage={<LogoProgramAcad style={{ display: 'flex', flex: 1 }} />}>
-                <SectionText>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in commodo mi, et condimentum lorem. Vivamus in justo sed odio placerat feugiat.</SectionText>
-                <SectionText>Proin fringilla in tellus a consectetur. Proin quis purus gravida, mollis eros at, imperdiet nunc. Aliquam massa est, tempor in mi ut, posuere luctus elit.</SectionText>
+                <SectionText>A Program.Acad é um ambiente de desenvolvimento de algoritmos, que pode ser utilizado diretamente na Web!</SectionText>
+                <SectionText>Você poderá participar de turmas e resolver diversos algoritmos que seu instrutor lhe passará.</SectionText>
             </Section>
 
             <Section title="Como funciona?" align="right" startImage={<LogoProgramAcad style={{ display: 'flex', flex: 1 }} />}>
-                <SectionText>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in commodo mi, et condimentum lorem. Vivamus in justo sed odio placerat feugiat.</SectionText>
-                <SectionText>Proin fringilla in tellus a consectetur. Proin quis purus gravida, mollis eros at, imperdiet nunc. Aliquam massa est, tempor in mi ut, posuere luctus elit.</SectionText>
+                <SectionText>Você poderá solicitar o acesso a uma turma, que deverá ser avaliado pelo seu instrutor para que ele permita você entrar na sala.</SectionText>
+                <SectionText>Após ser aceito, você terá acesso a todos os algoritmos que o instrutor disponibilizar, tente resolver todos!</SectionText>
             </Section>
 
             <Section title="Como começar" align="center">
                 <Container>
-                    <SectionText>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in commodo mi, et condimentum lorem. Vivamus in justo sed odio placerat feugiat.</SectionText>
+                    <SectionText>Você pode criar uma conta agora mesmo ou acessar utilizando uma de suas redes sociais.</SectionText>
+                    <Button variant="contained" color="secondary" onClick={() => history.push("/cadastro")}>Criar minha conta</Button>
                 </Container>
             </Section>
         </>
