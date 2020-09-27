@@ -1,15 +1,15 @@
+import { Container, Typography } from '@material-ui/core';
+import { makeStyles, styled } from '@material-ui/core/styles';
 import React from 'react';
-import { Typography, Container } from '@material-ui/core';
-import { styled, makeStyles } from '@material-ui/core/styles';
 
 export const SpacedBox = styled(Container)({
     display: 'flex',
     flexGrow: 1,
     flexWrap: 'wrap',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    padding: 35,
+    padding: 10,
     borderTop: '1px solid #d2d2d2'
 });
 
